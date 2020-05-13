@@ -19,6 +19,9 @@
 
     <modules>
         <module>spring-cloud-config-center</module>
+        <module>spring-cloud-dubbo-api</module>
+        <module>spring-cloud-dubbo-provider</module>
+        <module>spring-cloud-dubbo-consumer</module>
     </modules>
 	
 	<!--版本号-->
@@ -30,6 +33,23 @@
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 		<spring-cloud-alibaba-dependencies.version>2.2.1.RELEASE</spring-cloud-alibaba-dependencies.version>
 		<lombok.version>1.18.12</lombok.version>
+        <dubbo.version>2.7.6</dubbo.version>
+        <curator.version>4.0.1</curator.version>
+
+        <spring-cloud-dubbo.version>2.2.1.RELEASE</spring-cloud-dubbo.version>
+        <feign.version>11.0</feign.version>
+        <org-jboss-resteasy.version>3.0.19.Final</org-jboss-resteasy.version>
+
+        <!-- Dependency Versions -->
+        <spring-cloud-commons.version>2.2.2.RELEASE</spring-cloud-commons.version>
+        <spring-cloud-netflix.version>2.2.2.RELEASE</spring-cloud-netflix.version>
+        <spring-cloud-openfeign.version>2.2.2.RELEASE</spring-cloud-openfeign.version>
+        <spring-cloud-bus.version>2.2.1.RELEASE</spring-cloud-bus.version>
+        <spring-cloud-gateway.version>2.2.2.RELEASE</spring-cloud-gateway.version>
+        <spring-cloud-stream.version>Horsham.SR3</spring-cloud-stream.version>
+        <spring-cloud-consul.version>2.2.2.RELEASE</spring-cloud-consul.version>
+        <spring-cloud-config.version>2.2.2.RELEASE</spring-cloud-config.version>
+        <spring-cloud-zookeeper.version>2.2.1.RELEASE</spring-cloud-zookeeper.version>
     </properties>
 
     <dependencies>
