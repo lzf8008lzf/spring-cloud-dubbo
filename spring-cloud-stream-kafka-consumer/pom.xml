@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>spring-cloud-kafka-producer</groupId>
+    <groupId>spring-cloud-kafka-consumer</groupId>
 
-    <artifactId>spring.cloud.kafka.producer</artifactId>
-    <name>spring-cloud-kafka-producer</name>
+    <artifactId>spring.cloud.kafka.consumer</artifactId>
+    <name>spring-cloud-kafka-consumer</name>
     <description>Example demonstrating how to use nacos config</description>
     <packaging>jar</packaging>
 
