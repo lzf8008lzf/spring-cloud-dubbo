@@ -22,6 +22,7 @@
         <module>spring-cloud-dubbo-api</module>
         <module>spring-cloud-dubbo-provider</module>
         <module>spring-cloud-dubbo-consumer</module>
+        <module>spring-cloud-stream-kafka-producer</module>
     </modules>
 	
 	<!--版本号-->
