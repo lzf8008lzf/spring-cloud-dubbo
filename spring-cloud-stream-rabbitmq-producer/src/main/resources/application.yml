@@ -22,26 +22,27 @@ spring:
         enabled: true
         force: true
         charset: UTF-8
-  stream:
-    binders:
-      pro:
-        type: rabbit
-        environment:
-          spring:
-            rabbitmq:
-              addresses: dubbohost
-              port: 5672
-              username: test
-              password: test
-              virtual-host: test
-    bindings:
-      myOutPut:
-        destination: myOutPut
-        content-type: application/json
-        default-binder: test
-    rabbit:
+  cloud:
+    stream:
+      binders:
+        pro:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                addresses: dubbohost
+                port: 5672
+                username: test
+                password: test
+                virtual-host: test
       bindings:
         myOutPut:
-          producer:
-            exchangeType: topic
-            routing-key-expression: headers.routeId
+          destination: myOutPut
+          content-type: application/json
+          default-binder: test
+      rabbit:
+        bindings:
+          myOutPut:
+            producer:
+              exchangeType: topic
+              routing-key-expression: headers.routeId

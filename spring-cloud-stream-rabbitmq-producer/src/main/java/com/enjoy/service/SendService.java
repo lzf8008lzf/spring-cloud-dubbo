@@ -24,6 +24,6 @@ public class SendService {
     private MessageChannel channel;
 
     public void sendMsg(String msg){
-        channel.send(MessageBuilder.withPayload(msg).setHeader("routeId", UUID.fromString("routeId")).build());
+        channel.send(MessageBuilder.withPayload(msg).setHeader("routeId", UUID.randomUUID().toString()).build());
     }
 }
