@@ -12,14 +12,11 @@ import org.springframework.cloud.stream.messaging.Sink;
  **/
 
 //消息接受端，stream给我们提供了Sink,Sink源码里面是绑定input的，要跟我们配置文件的imput关联的。
-@Component
 @EnableBinding(Sink.class)
 public class RecieveService {
+
     @StreamListener(Sink.INPUT)
-    public void input(Message<Company> message) throws IOException {
-        Channel channel = (com.rabbitmq.client.Channel)message.getHeaders().get(AmqpHeaders.CHANNEL);
-        Long deliveryTag = (Long) message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);
-        channel.basicAck(deliveryTag, false);
-        System.err.println(JSON.toJSONString(message.getPayload()));
+    public void recieve(Object payload){
+        System.out.println(payload);
     }
 }

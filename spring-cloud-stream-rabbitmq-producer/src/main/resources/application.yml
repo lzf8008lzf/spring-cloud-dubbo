@@ -25,7 +25,7 @@ spring:
   cloud:
     stream:
       binders:
-        pro:
+        local_rabbit:
           type: rabbit
           environment:
             spring:
@@ -36,13 +36,12 @@ spring:
                 password: test
                 virtual-host: test
       bindings:
-        myOutPut:
+        output:
           destination: myOutPut
           content-type: application/json
-          default-binder: test
+          default-binder: local_rabbit
       rabbit:
         bindings:
-          myOutPut:
+          output:
             producer:
               exchangeType: topic
-              routing-key-expression: headers.routeId

@@ -24,14 +24,8 @@ spring:
         charset: UTF-8
   cloud:
     stream:
-      rabbit:
-        bindings:
-          input:
-            consumer:
-              bindingRoutingKey: routeKey1
-              acknowledge-mode: manual
       binders:
-        protest:
+        local_rabbit:
           type: rabbit
           environment:
             spring:
@@ -45,5 +39,4 @@ spring:
         input:
           destination: myOutPut
           content-type: application/json
-          default-binder: protest
-          group: group-cus1
+          default-binder: local_rabbit
