@@ -32,3 +32,9 @@ spring:
           destination: test-topic
           content-type: application/json
           group: test-group
+          #重试的初始时间间隔是1000豪秒，每次翻3倍，最大的间隔时间是15秒，进行5次重试
+          consumer:
+            maxAttempts: 5
+            backOffMultiplier: 3
+            backOffInitialInterval: 1000
+            backOffMaxInterval: 15000
