@@ -24,8 +24,9 @@ spring:
         charset: UTF-8
   cloud:
     stream:
-      binder:
-        namesrv-addr: dubbohost:9876
+      rocketmq:
+        binder:
+          namesrv-addr: dubbohost:9876
       bindings:
         input:
           destination: TopicTest

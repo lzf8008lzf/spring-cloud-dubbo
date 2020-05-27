@@ -28,11 +28,15 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-rocketmq -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
-            <version>0.9.0.RELEASE</version>
+            <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
+            <version>0.2.1.RELEASE</version>
+<!-- 使用最新版本报错 RocketMQ Message hasn't been sent. Caused by No route info of this topic-->
+<!--            <version>0.9.0.RELEASE</version>-->
         </dependency>
+
     </dependencies>
 
     <build>
