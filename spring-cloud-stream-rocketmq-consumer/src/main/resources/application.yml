@@ -29,6 +29,6 @@ spring:
           namesrv-addr: dubbohost:9876
       bindings:
         input:
-          destination: TopicTest
+          destination: test-topic
           content-type: application/json
           group: test-group
