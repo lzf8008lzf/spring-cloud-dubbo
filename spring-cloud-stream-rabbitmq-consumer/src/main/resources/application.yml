@@ -37,6 +37,11 @@ spring:
                 virtual-host: test
       bindings:
         input:
-          destination: myOutPut
+          destination: delay_topic
           content-type: application/json
           default-binder: local_rabbit
+      rabbit:
+        bindings:
+          input:
+            consumer:
+              delayed-exchange: true

@@ -24,5 +24,11 @@ public class ProducerController {
     public void send(@PathVariable("msg") String msg) {
         sendService.sendMsg(msg);
     }
+
+
+    @RequestMapping("/senddelay/{msg}")
+    public void sendDelay(@PathVariable("msg") String msg) {
+        sendService.sendDelayMsg(msg);
+    }
 }
 
