@@ -1,6 +1,7 @@
 package com.enjoy;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -46,11 +47,10 @@ public class GeneratorCode {
 //        log.info(environment.getProperty("spring.datasource.url"));
 
         String packageName = "com.enjoy";
-        boolean serviceNameStartWithI = false;//user -> UserService, 设置成true: user -> IUserService
-        generateByTables(serviceNameStartWithI, packageName, "CMS_USER");
+        generateByTables(packageName, "CMS_USER");
     }
 
-    private void generateByTables(boolean serviceNameStartWithI, String packageName, String... tableNames) {
+    private void generateByTables(String packageName, String... tableNames) {
         // 全局配置
         GlobalConfig config = new GlobalConfig();
         AutoGenerator mpg = new AutoGenerator();
@@ -67,28 +67,12 @@ public class GeneratorCode {
                 .setEntityLombokModel(false) //实体 是否为lombok模型（默认 false）
                 .setNaming(NamingStrategy.underline_to_camel) //表名生成策略
                 .setInclude(tableNames);//修改替换成你需要的表名，多个表名传数组
-        // strategyConfig.setExclude(new String[]{"test"}); // 排除生成的表
-        // 自定义实体，公共字段
-        strategyConfig.setSuperEntityColumns(new String[] { "ID", "CREATE_TIME", "CREATE_NAME" , "UPDATE_TIME", "UPDATE_NAME", "STATE"});
-        // 自定义 mapper 父类
-        // strategyConfig.setSuperMapperClass("com.baomidou.demo.TestMapper");
-        // 自定义 service 父类
-        //strategyConfig.setSuperServiceClass("com.baomidou.demo.TestService");
-        // 自定义 service 实现类父类
-        //strategyConfig.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
-        // 自定义 controller 父类
-//        strategyConfig.setSuperControllerClass("com.gzsys.common.base.controller.BaseController");
-        // 【实体】是否生成字段常量（默认 false）
-        // public static final String ID = "test_id";
-        // strategyConfig.setEntityColumnConstant(true);
-        // 【实体】是否为构建者模型（默认 false）
-        // public User setName(String name) {this.name = name; return this;}
-        // strategyConfig.setEntityBuliderModel(true);
 
         String projectPath = System.getProperty("user.dir");
 
         config.setActiveRecord(true) //是否 开启 ActiveRecord 模式
                 .setAuthor("LiZhaofu")
+                .setIdType(IdType.AUTO)
                 .setOutputDir(projectPath + "/src/main/java")
                 .setFileOverride(true)
                 .setActiveRecord(true)
@@ -96,9 +80,7 @@ public class GeneratorCode {
                 .setBaseResultMap(true)// XML ResultMap
                 .setBaseColumnList(false);// XML columList
 
-        if (!serviceNameStartWithI) {
-            config.setServiceName("%sService"); //自定义Service后戳,注意 %s 会自动填充表实体属性！
-        }
+        config.setServiceName("%sService"); //自定义Service后戳,注意 %s 会自动填充表实体属性！
 
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 【可无】
         InjectionConfig cfg = new InjectionConfig() {
@@ -125,11 +107,6 @@ public class GeneratorCode {
         // 关闭默认 xml 生成，调整生成 至 根目录
         TemplateConfig tc = new TemplateConfig();
         tc.setXml(null);
-//        tc.setXml(null)
-//                .setServiceImpl(null)
-//                .setController("template/comtroller.java.vm")
-//                .setEntity("template/entity.java.vm")
-//                .setService("template/service.java.vm");
         mpg.setTemplate(tc);
 
         // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
@@ -153,12 +130,8 @@ public class GeneratorCode {
                                 .setParent(packageName)  //父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
                                 .setController("controller") //Controller包名
                                 .setEntity("entity") //entity包名
-                        //.setXml("/")
                 )
                 .execute();
     }
 
-    private void generateByTables(String packageName, String... tableNames) {
-        generateByTables(true, packageName, tableNames);
-    }
 }

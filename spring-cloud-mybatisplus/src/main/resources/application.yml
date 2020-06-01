@@ -24,11 +24,11 @@ spring:
         charset: UTF-8
   datasource:
     name: mysqldb
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://123.56.72.90:3306/yuexiang?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=round&serverTimezone=Asia/Shanghai
     username: yuexiang
     password: Yxiang@123
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
     initialSize: 5
     minIdle: 5
     maxActive: 20
@@ -46,30 +46,42 @@ spring:
 # Mybatis-Plus 配置
 mybatis-plus:
   mapper-locations: classpath:/mapper/*Mapper.xml
-  typeAliasesPackage: com.fendo.mybatis.plus.entity
-  typeEnumsPackage: com.fendo.mybatis.plus.entity.enums
-  #  global-config:
-  #    id-type: 2
-  #    field-strategy: 2
-  #    db-column-underline: true
-  #    refresh-mapper: true
-  #    #capital-mode: true
-  #    #key-generator: com.baomidou.springboot.xxx
-  #    logic-delete-value: 0
-  #    logic-not-delete-value: 1
-  #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-  #    #meta-object-handler: com.baomidou.springboot.xxx
-  #    #sql-injector: com.baomidou.springboot.xxx
-  #  configuration:
-  #    map-underscore-to-camel-case: true
-  #    cache-enabled: false
-  global-config:
-    id-type: 3  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
-    db-column-underline: false
-    refresh-mapper: true
+  typeAliasesPackage: com.enjoy.entity
+#  typeEnumsPackage: com.enjoy.entity.enums
   configuration:
+    # 配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
     map-underscore-to-camel-case: true
-    cache-enabled: true #配置的缓存的全局开关
-    lazyLoadingEnabled: true #延时加载的开关
-    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+    # 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true
+    cache-enabled: false
+    # 懒加载
+    aggressive-lazy-loading: true
+    # NONE：不启用自动映射 PARTIAL：只对非嵌套的 resultMap 进行自动映射 FULL：对所有的 resultMap 都进行自动映射
+    auto-mapping-behavior: partial
+    # NONE：不做任何处理 (默认值)WARNING：以日志的形式打印相关警告信息 FAILING：当作映射失败处理，并抛出异常和详细信息
+    auto-mapping-unknown-column-behavior: none
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: "null"
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    # 是否控制台 print mybatis-plus 的 LOGO
+    banner: true
+    # 机器 ID 部分(影响雪花ID)
+    #    worker-id:
+    # 数据标识 ID 部分(影响雪花ID)(workerId 和 datacenterId 一起配置才能重新初始化 Sequence)
+  #    datacenter-id:
+    db-config:
+      #表名下划线命名默认true
+      table-underline: true
+      #id类型
+      id-type: auto
+      #是否开启大写命名，默认不开启
+      #capital-mode: false
+      #逻辑已删除值,(逻辑删除下有效) 需要注入逻辑策略LogicSqlInjector 以@Bean方式注入
+      logic-not-delete-value: 0
+      #逻辑未删除值,(逻辑删除下有效)
+      logic-delete-value: 1
+      # IGNORED	忽略判断 NOT_NULL 非NULL判断  NOT_EMPTY 非空判断(只对字符串类型字段,其他类型字段依然为非NULL判断)  DEFAULT	追随全局配置 类似的还有update-strategy、select-strategy等
+      insert-strategy: not_null
