@@ -27,8 +27,9 @@
 <!--        <module>spring-cloud-stream-kafka-consumer</module>-->
 <!--        <module>spring-cloud-stream-rabbitmq-producer</module>-->
 <!--        <module>spring-cloud-stream-rabbitmq-consumer</module>-->
-        <module>spring-cloud-stream-rocketmq-producer</module>
-        <module>spring-cloud-stream-rocketmq-consumer</module>
+<!--        <module>spring-cloud-stream-rocketmq-producer</module>-->
+<!--        <module>spring-cloud-stream-rocketmq-consumer</module>-->
+        <module>spring-cloud-mybatisplus</module>
     </modules>
 	
 	<!--版本号-->
