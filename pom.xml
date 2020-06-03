@@ -21,7 +21,7 @@
 <!--        <module>spring-cloud-config-center</module>-->
         <module>spring-cloud-distributed-lock</module>
 <!--        <module>spring-cloud-dubbo-api</module>-->
-<!--        <module>spring-cloud-dubbo-provider</module>-->
+        <module>spring-cloud-dubbo-provider</module>
 <!--        <module>spring-cloud-dubbo-consumer</module>-->
 <!--        <module>spring-cloud-stream-kafka-producer</module>-->
 <!--        <module>spring-cloud-stream-kafka-consumer</module>-->
