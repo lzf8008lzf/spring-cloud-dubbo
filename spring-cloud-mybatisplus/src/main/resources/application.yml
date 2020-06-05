@@ -22,6 +22,16 @@ spring:
         enabled: true
         force: true
         charset: UTF-8
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-nodes: 192.168.20.240:9300
+      cluster-name: elasticsearch
+      properties:
+        path:
+          logs: elasticsearch/log
+          data: elasticsearch/data
   datasource:
     name: mysqldb
     type: com.alibaba.druid.pool.DruidDataSource
