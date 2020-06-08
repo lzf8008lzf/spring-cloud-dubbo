@@ -2,6 +2,7 @@ package com.enjoy.mapper;
 
 import com.enjoy.entity.CmsUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.CacheNamespace;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author LiZhaofu
  * @since 2020-06-01
  */
+@CacheNamespace(implementation = com.enjoy.core.framework.cache.RedisCache.class)
 public interface CmsUserMapper extends BaseMapper<CmsUser> {
 
 }

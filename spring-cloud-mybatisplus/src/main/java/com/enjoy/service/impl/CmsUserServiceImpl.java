@@ -5,6 +5,7 @@ import com.enjoy.mapper.CmsUserMapper;
 import com.enjoy.service.CmsUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
  * @since 2020-06-01
  */
 @Service
+@Transactional
 public class CmsUserServiceImpl extends ServiceImpl<CmsUserMapper, CmsUser> implements CmsUserService {
 
 }
