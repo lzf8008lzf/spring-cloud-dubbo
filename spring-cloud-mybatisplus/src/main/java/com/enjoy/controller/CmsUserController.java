@@ -2,12 +2,10 @@ package com.enjoy.controller;
 
 
 import com.enjoy.entity.CmsUser;
-import com.enjoy.entity.TestBean;
 import com.enjoy.service.CmsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

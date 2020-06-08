@@ -69,10 +69,15 @@ spring:
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
     spring.datasource.filters: stat,wall,log4j
+    aop-patterns: com.enjoy.service.*
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#  aop:
+#    auto: true
+#    proxy-target-class: true
 # Mybatis-Plus 配置
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+#  config-location: mybatis-config.xml
+  mapper-locations: mapper/*.xml
   typeAliasesPackage: com.enjoy.entity
 #  typeEnumsPackage: com.enjoy.entity.enums
   configuration:

@@ -1,9 +1,13 @@
 package com.enjoy.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.enjoy.core.framework.cache.RedisCache;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.aop.interceptor.PerformanceMonitorInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @program: spring-cloud-dubbo
@@ -13,15 +17,21 @@ import org.springframework.context.annotation.Configuration;
  **/
 
 @Configuration
-@MapperScan("com.fendo.mybatis.plus.mapper*")
+@MapperScan("com.enjoy.mapper")
 public class MybatisPlusConfig {
-//    /**
-//     * mybatis-plus SQL执行效率插件【生产环境可以关闭】
-//     */
-//    @Bean
-//    public PerformanceInterceptor performanceInterceptor() {
-//        return new PerformanceInterceptor();
-//    }
+
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate) {
+        RedisCache.setRedisTemplate(redisTemplate);
+    }
+
+    /**
+     * mybatis-plus SQL执行效率插件【生产环境可以关闭】
+     */
+    @Bean
+    public PerformanceMonitorInterceptor performanceInterceptor() {
+        return new PerformanceMonitorInterceptor();
+    }
 
     /**
      * 分页插件
