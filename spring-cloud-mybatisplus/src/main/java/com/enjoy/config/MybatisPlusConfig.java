@@ -1,13 +1,22 @@
 package com.enjoy.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.enjoy.core.framework.cache.RedisCache;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
+import org.omg.PortableInterceptor.Interceptor;
 import org.springframework.aop.interceptor.PerformanceMonitorInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import javax.sql.DataSource;
 
 /**
  * @program: spring-cloud-dubbo
@@ -18,7 +27,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 @MapperScan("com.enjoy.mapper")
+@Slf4j
 public class MybatisPlusConfig {
+
+//    @Autowired
+//    private DataSource dataSource;
 
     @Autowired
     public void setRedisTemplate(RedisTemplate redisTemplate) {
@@ -40,5 +53,11 @@ public class MybatisPlusConfig {
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
+
+//    @Bean(name = "transactionManager")
+//    public DataSourceTransactionManager transactionManager(){
+//        log.info("初始化transactionManager");
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 }
 
