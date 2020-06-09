@@ -44,3 +44,5 @@ CREATE TABLE `cms_user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 511953 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO `cms_user`(`id`, `uuid`, `nick_name`, `tag_id`, `create_date`, `avatar`, `modify_date`, `huanxin_id`, `org_id`, `attention_associator_id`, `fans_associator_id`, `description`, `disabled`, `org_type`, `fans_count`, `client_uuid`) VALUES (1, '0c33dd8d-5617-435b-bead-74018b1e28b3', '     __待我长发及腰° ❀', '1,2,3,4,5', '2016-11-21 11:50:09', 'https://yuexiang-video.oss-cn-beijing.aliyuncs.com/2019/04/04/15-43-270404-1432391974.jpg', '2019-04-04 15:44:55', 'Huanxin1-1523183201804', NULL, NULL, '264653', '', 0, 1, 164907, '157895');
