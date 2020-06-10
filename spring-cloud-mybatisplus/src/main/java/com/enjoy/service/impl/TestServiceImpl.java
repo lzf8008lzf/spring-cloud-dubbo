@@ -10,7 +10,15 @@ package com.enjoy.service.impl;
 import com.enjoy.dao.TestDao;
 import com.enjoy.entity.TestBean;
 import com.enjoy.service.TestService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
+@Slf4j
 public class TestServiceImpl implements TestService {
     @Autowired
     TestDao testDao;
@@ -76,6 +85,21 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<TestBean> findByNameOrDesc(String nameordesc) {
         return testDao.findByNameOrDesc(nameordesc);
+    }
+
+    @Override
+    public Page<TestBean> search(String keyword, Pageable pageable) {
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        if (StringUtils.isNotEmpty(keyword)) {
+            queryBuilder.should(QueryBuilders.matchQuery("name", keyword).boost(3)); // 给name字段更高的权重
+            queryBuilder.should(QueryBuilders.matchQuery("desc", keyword));   // description 默认权重 1
+            queryBuilder.minimumShouldMatch(1); // 至少一个should条件满足
+        }
+
+        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder)
+                .withPageable(pageable).build();
+        log.info("\n search(): searchContent [" + keyword + "] \n DSL  = \n " + searchQuery.getQuery().toString());
+        return testDao.search(searchQuery);
     }
 }
 

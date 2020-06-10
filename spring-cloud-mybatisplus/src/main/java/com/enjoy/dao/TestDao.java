@@ -8,11 +8,11 @@ package com.enjoy.dao;
  **/
 
 import com.enjoy.entity.TestBean;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.List;
 
-public interface TestDao extends CrudRepository<TestBean, Long> {
+public interface TestDao extends ElasticsearchRepository<TestBean, Long> {
     List<TestBean> findByName(String name);
 
     List<TestBean> findByNameOrDesc(String text);
