@@ -17,8 +17,9 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ import java.util.Random;
 public class TestServiceImpl implements TestService {
     @Autowired
     TestDao testDao;
+
+    @Autowired
+    private ElasticsearchTemplate elasticsearchTemplate;
 
     @Override
     public Iterable<TestBean> findAll() {
@@ -96,7 +100,7 @@ public class TestServiceImpl implements TestService {
             queryBuilder.minimumShouldMatch(1); // 至少一个should条件满足
         }
 
-        SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder)
+        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder)
                 .withPageable(pageable).build();
         log.info("\n search(): searchContent [" + keyword + "] \n DSL  = \n " + searchQuery.getQuery().toString());
         return testDao.search(searchQuery);
