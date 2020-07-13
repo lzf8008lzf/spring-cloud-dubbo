@@ -28,15 +28,15 @@ public class PushPayloadBuild {
 
 
     /**
-     * Android 通过昵称alias推送
+     * 所有平台 通过昵称alias推送
      *
      * @param alias
      * @param alert
      * @return
      */
-    public static PushPayload buildPushObject_android_alias_alert(String alias, String alert) {
+    public static PushPayload buildPushObject_all_alias_alert(String alias, String alert) {
         return PushPayload.newBuilder()
-                .setPlatform(Platform.android())
+                .setPlatform(Platform.all())
                 .setAudience(Audience.alias(alias))
                 .setNotification(Notification.alert(alert))
                 .build();
@@ -58,10 +58,10 @@ public class PushPayloadBuild {
     }
 
 
-    public static PushPayload buildPushObject_android_tag_alertWithTitle(String alert, String title) {
+    public static PushPayload buildPushObject_android_tag_alertWithTitle(String tag, String alert, String title) {
         return PushPayload.newBuilder()
                 .setPlatform(Platform.android())
-                .setAudience(Audience.tag("tag1"))
+                .setAudience(Audience.tag(tag))
                 .setNotification(Notification.android(alert, title, null))
                 .build();
     }

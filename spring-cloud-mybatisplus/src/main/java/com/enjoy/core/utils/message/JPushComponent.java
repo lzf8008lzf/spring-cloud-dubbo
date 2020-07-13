@@ -4,6 +4,7 @@ import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.push.PushResult;
+import cn.jpush.api.push.model.PushPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,23 @@ public class JPushComponent {
 
     public JPushComponent() {
         jpushClient = new JPushClient(MASTER_SECRET, APP_KEY);
+    }
+
+    private boolean sendPushMessage(PushPayload pushPayload)
+    {
+        boolean bRet = false;
+        try {
+            PushResult result = jpushClient.sendPush(pushPayload);
+            bRet = result.isResultOK();
+            logger.info("resultOK:"+result.isResultOK());
+        } catch (APIConnectionException e) {
+            logger.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            logger.error("Should review the error, and fix the request", e);
+            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
+        }
+
+        return bRet;
     }
 
     public String getUserIdByEnv(Long userId)
@@ -84,77 +102,9 @@ public class JPushComponent {
     }
 
     public void pushMessage(Long userId,String msg,Map<String,String> map){
-        try {
 
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushNoticeAllByUserId(getUserIdByEnv(userId),msg,map));
-            logger.info("resultOK:"+result.isResultOK());
+        sendPushMessage(PushPayloadBuild.buildPushNoticeAllByUserId(getUserIdByEnv(userId),msg,map));
 
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
-        } catch (APIRequestException e) {
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
-    }
-
-    /**
-     * 极光推送根据UserId推送
-     * @param userId
-     * @param msg
-     * @return
-     */
-    public void pushNoticeByUserId(Long userId,String msg,Map<String,String> map){
-        fixedThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                pushNotice(userId,msg,map);
-            }
-        });
-    }
-
-    public void pushNotice(Long userId,String msg,Map<String,String> map)
-    {
-        try {
-
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushNoticeAllByUserId(getUserIdByEnv(userId),msg,map));
-            logger.info("resultOK:"+result.isResultOK());
-
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
-        } catch (APIRequestException e) {
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
-    }
-
-    /**
-     * 极光推送根据UserId推送(不到达制定页面)
-     * @param userId
-     * @param msg
-     * @return
-     */
-    public void pushMessageByUserId(Long userId,String msg){
-        fixedThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                pushMessage(userId,msg);
-            }
-        });
-    }
-
-    public void pushMessage(Long userId,String msg)
-    {
-        try {
-
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushObjecAllByUserId(getUserIdByEnv(userId),msg));
-            logger.info("resultOK:"+result.isResultOK());
-
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
-        } catch (APIRequestException e) {
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
     }
 
     /**
@@ -164,46 +114,19 @@ public class JPushComponent {
      * @return
      */
     public void pushMessageByTag(String tag,String msg){
-        try {
 
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushObjecAllByTAG(tag,msg));
-            logger.info("resultOK:"+result.isResultOK());
-
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
-
-        } catch (APIRequestException e) {
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
+        sendPushMessage(PushPayloadBuild.buildPushObjecAllByTAG(tag,msg));
     }
 
     public void pushMessageByUserIdAll(Long userId,String msg){
-        try {
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushObject_android_alias_alert(userId.toString(),msg));
-            PushResult result2 = jpushClient.sendPush(PushPayloadBuild.buildPushObject_ios_aliasAnd_alertWithExtrasAndMessage(userId.toString(),msg,"消息"));
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
-        } catch (APIRequestException e) {
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
+
+        sendPushMessage(PushPayloadBuild.buildPushObject_all_alias_alert(userId.toString(),msg));
+
     }
-
-
+    
      public void pushMessageByTagAll(String tag,String msg){
-        try {
-            PushResult result = jpushClient.sendPush(PushPayloadBuild.buildPushObject_android_tag_alert(tag,msg));
-            logger.info("Got result - " + result);
-            PushResult result2 = jpushClient.sendPush(PushPayloadBuild.buildPushObject_ios_tagAnd_alertWithExtrasAndMessage(tag,msg,"消息"));
-            logger.info("Got result - " + result2);
-        } catch (APIConnectionException e) {
-            logger.error("Connection error, should retry later", e);
 
-        } catch (APIRequestException e) {
-            // Should review the error, and fix the request
-            logger.error("Should review the error, and fix the request", e);
-            logger.error("HTTP Status:{}, Error Code:{}, Error Message:{} " , e.getStatus(),e.getErrorCode(),e.getErrorMessage());
-        }
+        sendPushMessage(PushPayloadBuild.buildPushObject_android_tag_alert(tag,msg));
+
     }
 }
