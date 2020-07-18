@@ -20,8 +20,8 @@ import java.util.concurrent.Executors;
 public class JPushComponent {
 
     private static Logger logger = LoggerFactory.getLogger(JPushComponent.class);
-    private static final String APP_KEY = "314eea1b168bd27f69a75494";//必填，例如466f7032ac604e02fb7bda89
-    private static final String MASTER_SECRET = "a038789292e4959af2fde16f";//必填，每个应用都对应一个masterSecret
+    private static final String APP_KEY = "6bf71a021447bfba93b7d1e0";//必填，314eea1b168bd27f69a75494
+    private static final String MASTER_SECRET = "b78bca6365e686849c50c0be";//必填，每个应用都对应一个masterSecret a038789292e4959af2fde16f
     private JPushClient jpushClient = null;
 
     /**
@@ -70,21 +70,6 @@ public class JPushComponent {
 
         return envUserId;
     }
-
-    public void pushMessageListByUserId(List<Map<String,Object>> pushMessageList)
-    {
-        // 消息推送
-        if(pushMessageList != null && (pushMessageList).size()> 0) {
-
-            for (Map<String,Object> it:pushMessageList) {
-                Long msgReceiveUserId = (Long) it.get("merchantId");
-                String msgContent = (String) it.get("msgContent");
-                Map<String,String> extraMap = (Map<String, String>) it.get("extraMap");
-                pushMessageByUserId(msgReceiveUserId, msgContent, extraMap);
-            }
-        }
-    }
-
 
     /**
      * 极光推送根据UserId推送

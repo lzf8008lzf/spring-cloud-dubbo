@@ -14,24 +14,28 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.dubbo.bootstrap;
+package com.alibaba.cloud;
 
-import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * Dubbo Spring Cloud Provider Bootstrap.
+ * Dubbo Spring Cloud Consumer Bootstrap.
  */
 @EnableDiscoveryClient
 @EnableAutoConfiguration
-public class DubboSpringCloudProviderBootstrap {
+//@SpringBootApplication
+@EnableFeignClients(basePackages = {"com.alibaba.cloud.feign"})
+public class DubboSpringCloudConsumerBootstrap {
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(DubboSpringCloudProviderBootstrap.class)
-				.properties("spring.profiles.active=nacos").web(WebApplicationType.NONE)
-				.run(args);
+//		new SpringApplicationBuilder(DubboSpringCloudConsumerBootstrap.class)
+//				.properties("spring.profiles.active=nacos")
+//				.run(args);
+		SpringApplication.run(DubboSpringCloudConsumerBootstrap.class, args);
 	}
 
 }
