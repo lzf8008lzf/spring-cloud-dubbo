@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: nacos
   application:
     name: spring-cloud-alibaba-dubbo-provider
   main:

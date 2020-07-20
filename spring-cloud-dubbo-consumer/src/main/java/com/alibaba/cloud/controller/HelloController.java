@@ -2,6 +2,7 @@ package com.alibaba.cloud.controller;
 
 import com.alibaba.cloud.feign.HelloServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2020-07-18 15:01
  **/
 
-//@RestController
+@RestController
 public class HelloController {
     @Autowired
+    @Lazy
     private HelloServiceClient helloServiceClient;
 
     HelloController()
