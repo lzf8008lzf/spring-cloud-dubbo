@@ -14,30 +14,24 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud;
+package com.alibaba.cloud.bootstrap;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
- * Dubbo Spring Cloud Consumer Bootstrap.
+ * Dubbo Spring Cloud Provider Bootstrap.
  */
 @EnableDiscoveryClient
-@EnableAutoConfiguration
-@EnableFeignClients
-@SpringBootApplication(scanBasePackages  = {"com.alibaba.cloud.controller"})
-public class DubboSpringCloudConsumerBootstrap {
+@SpringBootApplication
+public class DubboSpringCloudProviderBootstrap {
 
 	public static void main(String[] args) {
-//		new SpringApplicationBuilder(DubboSpringCloudConsumerBootstrap.class)
-//				.properties("spring.profiles.active=nacos")
+//		new SpringApplicationBuilder(DubboSpringCloudProviderBootstrap.class)
+//				.properties("spring.profiles.active=nacos").web(WebApplicationType.NONE)
 //				.run(args);
-		SpringApplication.run(DubboSpringCloudConsumerBootstrap.class, args);
+		SpringApplication.run(DubboSpringCloudProviderBootstrap.class, args);
 	}
 
 }

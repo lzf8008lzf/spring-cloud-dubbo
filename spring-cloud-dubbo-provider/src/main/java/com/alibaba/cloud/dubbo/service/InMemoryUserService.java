@@ -25,7 +25,7 @@ import org.apache.dubbo.config.annotation.Service;
 /**
  * In-Memory {@link UserService} implementation.
  */
-//@Service(protocol = "dubbo")
+@Service(protocol = "dubbo")
 public class InMemoryUserService implements UserService {
 
 	private Map<Long, User> usersRepository = new HashMap<>();

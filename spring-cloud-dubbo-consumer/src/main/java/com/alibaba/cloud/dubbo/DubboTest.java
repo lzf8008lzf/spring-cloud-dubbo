@@ -8,10 +8,13 @@ import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,8 +30,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @author: LiZhaofu
  * @create: 2020-07-18 17:17
  **/
-//@EnableScheduling
-//@EnableCaching
+@EnableScheduling
+@EnableCaching
+@Component
 public class DubboTest {
     @Reference(check = false)
     private UserService userService;
@@ -51,7 +55,7 @@ public class DubboTest {
     @LoadBalanced
     private RestTemplate restTemplate;
 
-    //	@Bean
+    @Bean
     public ApplicationRunner userServiceRunner() {
         return arguments -> {
 
