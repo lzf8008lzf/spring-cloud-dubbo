@@ -14,8 +14,3 @@ dubbo:
     address: spring-cloud://localhost
 #   The traditional Dubbo's registry
 #   address: zookeeper://127.0.0.1:2181
-
-server:
-  port: 8800
-  servlet:
-    context-path: /

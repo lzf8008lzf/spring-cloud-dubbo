@@ -1,7 +1,6 @@
 package com.alibaba.cloud.consumer;
 
 
-
 import com.alibaba.cloud.dubbo.WelcomeAd;
 import com.alibaba.cloud.dubbo.service.IDubboService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @Component
 @Slf4j

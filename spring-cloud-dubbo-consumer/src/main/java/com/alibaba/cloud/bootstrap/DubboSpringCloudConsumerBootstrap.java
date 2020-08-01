@@ -26,7 +26,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @EnableAutoConfiguration
-@SpringBootApplication(scanBasePackages = {"com.alibaba.cloud.dubbo"})
+@SpringBootApplication(scanBasePackages = {"com.alibaba.cloud"})
 public class DubboSpringCloudConsumerBootstrap {
 
 	public static void main(String[] args) {

@@ -14,7 +14,7 @@ dubbo:
     check: false
 
 server:
-  port: 8008
+  port: 8000
   servlet:
     context-path: /
 
