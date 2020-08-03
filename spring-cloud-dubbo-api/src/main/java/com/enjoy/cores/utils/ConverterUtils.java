@@ -1,4 +1,4 @@
-package com.alibaba.cloud.dubbo.util;
+package com.enjoy.cores.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
