@@ -10,4 +10,6 @@ public interface IDubboService {
     String sayHello(String name);
 
     WelcomeAd welcomeAd();
+
+    String bigData();
 }

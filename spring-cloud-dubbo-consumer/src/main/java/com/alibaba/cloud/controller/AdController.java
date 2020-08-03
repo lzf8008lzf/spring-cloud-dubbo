@@ -21,4 +21,9 @@ public class AdController {
         return dubboConsumer.welcomeAd();
     }
 
+    @RequestMapping(value = "bigData", method = { RequestMethod.POST })
+    public int bigData() {
+        return dubboConsumer.bigData().length();
+    }
+
 }

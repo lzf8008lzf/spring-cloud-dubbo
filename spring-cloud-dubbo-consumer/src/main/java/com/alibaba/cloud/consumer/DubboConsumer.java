@@ -28,6 +28,10 @@ public class DubboConsumer {
         return consumerService.welcomeAd();
     }
 
+    public String bigData(){
+        return consumerService.bigData();
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
         ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext(new String[] {"dubbo-consumer.xml"});
