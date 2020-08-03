@@ -16,6 +16,11 @@ public class AdController {
     @Autowired
     private DubboConsumer dubboConsumer;
 
+    @RequestMapping(value = "sayHello", method = { RequestMethod.POST })
+    public String sayHello() {
+        return dubboConsumer.sayHello();
+    }
+
     @RequestMapping(value = "welcomeAd", method = { RequestMethod.POST })
     public WelcomeAd welcomeAd() {
         return dubboConsumer.welcomeAd();

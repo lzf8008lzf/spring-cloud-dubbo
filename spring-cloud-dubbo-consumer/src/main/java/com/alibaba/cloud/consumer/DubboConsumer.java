@@ -10,17 +10,21 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 @Component
 @Slf4j
 public class DubboConsumer {
 
-    @Reference(filter={"dubboTraceIdFilter"})
+    @Reference(filter={"dubboTraceIdFilter"},connections = 5)
     private IDubboService consumerService;
 
-    public void sayHello() {
-        String retStr = consumerService.sayHello("JeffLee");
-        log.info(retStr);
+    public String sayHello() {
+        Map<String,String> map = System.getenv();
+        System.out.println(map.get("USERNAME"));//获取用户名
+        System.out.println(map.get("COMPUTERNAME"));//获取计算机名
+        System.out.println(map.get("USERDOMAIN"));//获取计算机域名
+        return consumerService.sayHello(map.get("USERNAME"));
     }
 
     public WelcomeAd welcomeAd()
