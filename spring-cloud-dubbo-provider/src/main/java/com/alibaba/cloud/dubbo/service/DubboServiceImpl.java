@@ -12,7 +12,7 @@ import org.apache.dubbo.rpc.RpcContext;
  * @create: 2020-08-01 11:39
  **/
 
-@Service(filter={"dubboTraceIdFilter"})
+@Service(protocol = "dubbo",filter={"dubboTraceIdFilter"})
 @Slf4j
 public class DubboServiceImpl implements IDubboService{
     @Override
