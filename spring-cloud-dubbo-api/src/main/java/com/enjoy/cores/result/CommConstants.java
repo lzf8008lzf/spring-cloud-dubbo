@@ -8,6 +8,7 @@ public class CommConstants {
     public static final Boolean SUCCESS = true;
     public static final Boolean ERROR = false;
     public static final String TRACE_ID = "traceId";
+    public static final String DUBBO_ERROR = "dubboError";
 
     /**
      * 接口调用返回状态码

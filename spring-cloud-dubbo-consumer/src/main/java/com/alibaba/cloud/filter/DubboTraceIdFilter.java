@@ -1,10 +1,12 @@
 package com.alibaba.cloud.filter;
 
+import com.alibaba.fastjson.JSON;
 import com.enjoy.cores.result.CommConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.service.GenericService;
 import org.slf4j.MDC;
 import org.springframework.util.StopWatch;
 
@@ -42,8 +44,25 @@ public class DubboTraceIdFilter implements Filter {
         //用 commons-lang 提供的 StopWatch 计时，Spring 也提供了一个 StopWatch
         StopWatch clock = new StopWatch();
         clock.start(); //计时开始
+
+        Result result = null;
+
         try {
-            return invoker.invoke(invocation);
+
+            result = invoker.invoke(invocation);
+
+            if (result.hasException() && GenericService.class != invoker.getInterface()) {
+                Throwable exception = result.getException();
+                log.error("ErrMsg:[{}],serviceName:[{}],methodName:[{}],params:[{}]", exception.getMessage(), invoker.getInterface().getName(), invocation.getMethodName(), JSON.toJSONString(invocation.getArguments()));
+            }else {
+                String error = result.getAttachment(CommConstants.DUBBO_ERROR);
+                if(StringUtils.isNotEmpty(error)){
+                    log.error("ErrMsg:[{}],serviceName:[{}],methodName:[{}],params:[{}]", error, invoker.getInterface().getName(), invocation.getMethodName(), JSON.toJSONString(invocation.getArguments()));
+                }
+            }
+
+        } catch (RuntimeException e) {
+            log.error("ErrMsg:[{}],serviceName:[{}],methodName:[{}]", e.getMessage(), invoker.getInterface().getName(), invocation.getMethodName());
         } finally {
             MDC.remove(CommConstants.TRACE_ID);
 
@@ -52,6 +71,8 @@ public class DubboTraceIdFilter implements Filter {
                 log.info("traceId:{},调用方法:[{}],执行时间:[{}ms]",traceId,invocation.getMethodName(),clock.getTotalTimeMillis());
             }
         }
+
+        return result;
     }
 
     /**
