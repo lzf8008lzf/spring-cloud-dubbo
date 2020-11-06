@@ -2,7 +2,7 @@ package com.alibaba.cloud.dubbo.service;
 
 import com.alibaba.cloud.dubbo.WelcomeAd;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.rpc.RpcContext;
 
 /**
@@ -12,7 +12,7 @@ import org.apache.dubbo.rpc.RpcContext;
  * @create: 2020-08-01 11:39
  **/
 
-@Service(protocol = "dubbo",filter={"dubboTraceIdFilter"})
+@DubboService(protocol = "dubbo",filter={"dubboTraceIdFilter"})
 @Slf4j
 public class DubboServiceImpl implements IDubboService{
     @Override

@@ -4,7 +4,7 @@ package com.alibaba.cloud.consumer;
 import com.alibaba.cloud.dubbo.WelcomeAd;
 import com.alibaba.cloud.dubbo.service.IDubboService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 @Slf4j
 public class DubboConsumer {
 
-    @Reference(filter={"dubboTraceIdFilter"},connections = 5)
+    @DubboReference(filter={"dubboTraceIdFilter"},connections = 5)
     private IDubboService consumerService;
 
     public String sayHello() {

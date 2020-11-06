@@ -1,5 +1,10 @@
 package com.enjoy.cores.result;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Results<T> implements java.io.Serializable {
     /**
      *
@@ -9,113 +14,66 @@ public class Results<T> implements java.io.Serializable {
     /**
      * 成功标识
      */
-    private Boolean isSuccess;
+    private Boolean ok;
 
     /**
-     * 错误代码
+     * 返回代码
      */
-    private String errorCode;
+    private String code;
 
     /**
-     * 错误消息
+     * 消息描述
      */
-    private String errorMsg;
+    private String msg;
 
     /**
      * 返回结果对象
      */
     private T data;
 
-    private void setError(boolean isSuccess) {
-
-        this.setSuccess(isSuccess);
-
-        if (isSuccess) {
-            this.errorCode = CommConstants.RSP_ERROR_CODE.SUCCESS.value();
-            this.errorMsg = CommConstants.RSP_ERROR_CODE.SUCCESS.desc();
-        } else {
-            this.errorCode = CommConstants.RSP_ERROR_CODE.ERROR.value();
-            this.errorMsg = CommConstants.RSP_ERROR_CODE.ERROR.desc();
-        }
+    /**
+     * 有数据返回，默认为成功
+     * @param data
+     */
+    public Results(T data) {
+        this.ok = CommConstants.SUCCESS;
+        this.code = CommConstants.RSP_ERROR_CODE.SUCCESS.value();
+        this.msg = CommConstants.RSP_ERROR_CODE.SUCCESS.desc();
+        this.data = data;
     }
 
-    public Results() {
+    public Results(boolean ok, String code, String msg) {
+        this.ok = ok;
+        this.code = code;
+        this.msg = msg;
     }
 
     public static Results ok() {
-        return new Results(CommConstants.SUCCESS);
+        return ok(null);
+    }
+
+    public static Results ok(String code, String msg){
+        return new Results(CommConstants.SUCCESS,code,msg);
     }
 
     public static <T> Results<T> ok(T data) {
-        return new Results(CommConstants.SUCCESS, data);
+        return new Results(data);
     }
 
-    public static Results error(String errorMsg) {
-        return Results.error(CommConstants.RSP_ERROR_CODE.ERROR.value(), errorMsg);
+    public static Results error(String code, String msg) {
+        return new Results(CommConstants.ERROR, code, msg);
     }
 
-    public static Results error(String errorCode, String errorMsg) {
-        return new Results(errorCode, errorMsg);
+    public static Results error(String msg) {
+        return error(CommConstants.RSP_ERROR_CODE.ERROR.value(), msg);
     }
 
-    public void setError(String errorCode, String errorMsg){
-        this.isSuccess = CommConstants.ERROR;
-        this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
-    }
-
-    public Results(Boolean isSuccess) {
-        this.setError(isSuccess);//设置错误代码及错误消息
-    }
-
-    public Results(Boolean isSuccess, T data) {
-        this.setError(isSuccess);//设置错误代码及错误消息
-        this.data = data;
-    }
-
-    public Results(String errorCode, String errorMsg) {
-        this.setError(errorCode,errorMsg);
+    public static Results error() {
+        return error(CommConstants.RSP_ERROR_CODE.ERROR.desc());
     }
 
     public Boolean isOk() {
-        return isSuccess;
+        return ok;
     }
-
-    public Boolean isError() {
-        return !isSuccess;
-    }
-
-    public Boolean getSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(Boolean success) {
-        isSuccess = success;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
 
 }
