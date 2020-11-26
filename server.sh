@@ -48,8 +48,8 @@ stop(){
   sleep 2
   is_exist
   if [ $? -eq "0" ]; then
-    echo ">>> api 2 PID = $pid begin kill -15 $pid  <<<"
-    kill -15  $pid
+    echo ">>> api 2 PID = $pid begin kill -9 $pid  <<<"
+    kill -9  $pid
     sleep 2
     echo ">>> $JAR_NAME process stopped <<<"
   else
