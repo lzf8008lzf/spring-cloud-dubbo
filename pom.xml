@@ -29,7 +29,7 @@
 <!--        <module>spring-cloud-stream-rabbitmq-consumer</module>-->
 <!--        <module>spring-cloud-stream-rocketmq-producer</module>-->
 <!--        <module>spring-cloud-stream-rocketmq-consumer</module>-->
-<!--        <module>spring-cloud-mybatisplus</module>-->
+        <module>spring-cloud-mybatisplus</module>
 <!--        <module>nacos-feign-server</module>-->
 <!--        <module>nacos-feign-client</module>-->
         <module>spring-cloud-jwt</module>

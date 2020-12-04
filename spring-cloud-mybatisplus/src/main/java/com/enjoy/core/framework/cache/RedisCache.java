@@ -37,7 +37,7 @@ public class RedisCache implements Cache //实现类
         return this.readWriteLock;
     }
 
-    public static void setRedisTemplate(RedisTemplate redisTemplate) {
+    public static void setRedisTemlate(RedisTemplate redisTemplate) {
         RedisCache.redisTemplate = redisTemplate;
     }
 

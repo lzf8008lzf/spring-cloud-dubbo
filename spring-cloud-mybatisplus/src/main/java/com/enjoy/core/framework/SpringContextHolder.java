@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-//@Component
+@Component
 public class SpringContextHolder implements ApplicationContextAware, DisposableBean {
     private static ApplicationContext applicationContext;
 

@@ -34,6 +34,6 @@ public class CmsUserServiceTest {
         CmsUser cmsUser = cmsUserService.getById(1);
         log.info(JSON.toJSONString(cmsUser));
 
-        redisTemplate.opsForValue().set("getById",JSON.toJSONString(cmsUser));
+        //redisTemplate.opsForValue().set("getById",JSON.toJSONString(cmsUser));
     }
 }
