@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.CacheNamespace;
  * @author LiZhaofu
  * @since 2020-06-01
  */
-@CacheNamespace(implementation = com.enjoy.core.framework.cache.MybatisRedisCache.class)
+@CacheNamespace(implementation = com.enjoy.core.framework.cache.RedissonCache.class)
 public interface CmsUserMapper extends BaseMapper<CmsUser> {
 
 }

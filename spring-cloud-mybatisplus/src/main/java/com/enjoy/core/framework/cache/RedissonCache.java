@@ -43,6 +43,7 @@ public class RedissonCache implements Cache {
 
     public RedissonCache(String id) {
         this.id = id;
+        setRedissonConfig("/config/redisson.yaml");
     }
 
     @Override
