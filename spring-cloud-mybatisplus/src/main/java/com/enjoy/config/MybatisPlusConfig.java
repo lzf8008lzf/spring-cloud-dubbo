@@ -2,6 +2,7 @@ package com.enjoy.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.enjoy.core.framework.cache.RedisCache;
+import com.enjoy.core.utils.LongRedisTemplate;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,11 @@ public class MybatisPlusConfig {
 
 //    @Autowired
 //    private DataSource dataSource;
+
+    @Bean
+    public LongRedisTemplate longRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        return new LongRedisTemplate(redisConnectionFactory);
+    }
 
     /**
      * 配置自定义redisTemplate
