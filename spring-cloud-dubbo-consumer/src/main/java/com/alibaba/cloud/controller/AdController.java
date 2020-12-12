@@ -1,11 +1,8 @@
 package com.alibaba.cloud.controller;
 
-import com.alibaba.cloud.consumer.DubboConsumer;
-import com.alibaba.cloud.dubbo.WelcomeAd;
 import com.alibaba.cloud.dubbo.service.IDubboService;
 import com.enjoy.cores.result.Results;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,19 +17,18 @@ public class AdController {
     private IDubboService dubboConsumer;
 
     @RequestMapping(value = "sayHello")
-    public String sayHello() {
-
+    public Results sayHello() {
         return dubboConsumer.sayHello("Hello world!");
     }
 
     @RequestMapping(value = "welcomeAd")
-    public WelcomeAd welcomeAd() {
+    public Results welcomeAd() {
         return dubboConsumer.welcomeAd();
     }
 
     @RequestMapping(value = "bigData")
-    public int bigData() {
-        return dubboConsumer.bigData().length();
+    public Results bigData() {
+        return dubboConsumer.bigData();
     }
 
     @RequestMapping("exception")

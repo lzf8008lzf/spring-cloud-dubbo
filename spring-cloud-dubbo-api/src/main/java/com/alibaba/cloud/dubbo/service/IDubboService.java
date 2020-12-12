@@ -1,6 +1,5 @@
 package com.alibaba.cloud.dubbo.service;
 
-import com.alibaba.cloud.dubbo.WelcomeAd;
 import com.enjoy.cores.result.Results;
 
 /**
@@ -8,11 +7,11 @@ import com.enjoy.cores.result.Results;
  */
 public interface IDubboService {
 
-    String sayHello(String name);
+    Results sayHello(String name);
 
-    WelcomeAd welcomeAd();
+    Results welcomeAd();
 
-    String bigData();
+    Results bigData();
 
     Results exception();
 
