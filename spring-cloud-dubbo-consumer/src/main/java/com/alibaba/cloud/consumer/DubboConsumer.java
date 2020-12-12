@@ -3,10 +3,14 @@ package com.alibaba.cloud.consumer;
 
 import com.alibaba.cloud.dubbo.WelcomeAd;
 import com.alibaba.cloud.dubbo.service.IDubboService;
+import com.enjoy.cores.constants.DubboConstants;
+import com.enjoy.cores.result.Results;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,38 +20,13 @@ import java.util.Map;
 @Slf4j
 public class DubboConsumer {
 
-    @DubboReference(filter={"dubboTraceIdFilter"},connections = 5)
+    @DubboReference(check = DubboConstants.DUBBO_CHECK, timeout = DubboConstants.CONSUMER_TIMEOUT, filter = {DubboConstants.DUBBO_FILTER},
+            loadbalance = DubboConstants.CONSUMER_LOAD_BALANCE)
     private IDubboService consumerService;
 
-    public String sayHello() {
-        Map<String,String> map = System.getenv();
-        System.out.println(map.get("USERNAME"));//获取用户名
-        System.out.println(map.get("COMPUTERNAME"));//获取计算机名
-        System.out.println(map.get("USERDOMAIN"));//获取计算机域名
-        return consumerService.sayHello(map.get("USERNAME"));
+    @Bean("consumerService")
+    public IDubboService consumerService() {
+        return consumerService;
     }
 
-    public WelcomeAd welcomeAd()
-    {
-        return consumerService.welcomeAd();
-    }
-
-    public String bigData(){
-        return consumerService.bigData();
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext(new String[] {"dubbo-consumer.xml"});
-
-        context.start();
-
-        log.error("------------------------------------------------------------------------------------------------");
-        IDubboService dubboService=(IDubboService) context.getBean("consumerService");
-
-        String test=dubboService.sayHello("ttttttttttt");
-
-        log.error(test);
-
-    }
 }

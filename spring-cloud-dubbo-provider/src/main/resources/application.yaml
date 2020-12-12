@@ -5,7 +5,7 @@ dubbo:
     dubbo:
       name: dubbo
       port: -1
-      host: localhost
+#      host: localhost
 #    rmi:
 #      name: rmi
 #      port: 9090

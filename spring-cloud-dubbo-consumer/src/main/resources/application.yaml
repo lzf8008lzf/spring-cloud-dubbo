@@ -1,4 +1,8 @@
 dubbo:
+  protocols:
+    dubbo:
+      name: dubbo
+      port: -1
   registry:
     #   The Spring Cloud Dubbo's registry extension
     ##  the default value of dubbo-provider-services is "*", that means to subscribe all providers,

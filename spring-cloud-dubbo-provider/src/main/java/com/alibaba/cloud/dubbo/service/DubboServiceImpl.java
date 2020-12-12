@@ -1,6 +1,8 @@
 package com.alibaba.cloud.dubbo.service;
 
 import com.alibaba.cloud.dubbo.WelcomeAd;
+import com.enjoy.cores.constants.DubboConstants;
+import com.enjoy.cores.result.Results;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.rpc.RpcContext;
@@ -12,7 +14,8 @@ import org.apache.dubbo.rpc.RpcContext;
  * @create: 2020-08-01 11:39
  **/
 
-@DubboService(protocol = "dubbo",filter={"dubboTraceIdFilter"})
+@DubboService(protocol = "dubbo",filter = {DubboConstants.DUBBO_FILTER},loadbalance = DubboConstants.PROVIDER_LOAD_BALANCE,
+        timeout = DubboConstants.PROVIDER_TIMEOUT,retries = DubboConstants.PROVIDER_RETRIES)
 @Slf4j
 public class DubboServiceImpl implements IDubboService{
     @Override
@@ -47,5 +50,22 @@ public class DubboServiceImpl implements IDubboService{
         sb.append(longStr);
         //100 KB (102,400 字节)
         return sb.toString();
+    }
+
+    @Override
+    public Results exception() {
+        return Results.ok(1/0);
+    }
+
+    @Override
+    public Results blockService(int seconds) {
+        log.info("seconds:{}",seconds);
+        try {
+            Thread.sleep(seconds*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("block success!");
+        return Results.ok();
     }
 }
