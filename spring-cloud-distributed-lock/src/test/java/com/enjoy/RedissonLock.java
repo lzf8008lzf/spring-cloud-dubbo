@@ -1,6 +1,5 @@
 package com.enjoy;
 
-import com.enjoy.distributedlock.RedissonManager;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,43 +28,44 @@ import java.util.concurrent.TimeUnit;
 public class RedissonLock {
 
     @Autowired
-    private RedissonManager redissonManager;
-
-    RedissonClient redissonClient = redissonManager.getRedisson();
+    private RedissonClient redissonClient;
 
     @Test
     public void test() throws Exception {
 
-        RLock lock = redissonClient.getLock("rlock");
+        RLock lock = redissonClient.getFairLock("rlock");
 
-        try {
-            lock.lock();
-        } finally {
-            lock.unlock();
-        }
-
-
-        //另外Redisson还通过加锁的方法提供了leaseTime的参数来指定加锁的时间。超过这个时间后锁便自动解开了。
-
-        // 加锁以后10秒钟自动解锁
-        // 无需调用unlock方法手动解锁
-        lock.lock(10, TimeUnit.SECONDS);
+//        try {
+//            lock.lock();
+//        } finally {
+//            lock.unlock();
+//        }
+//
+//
+//        //另外Redisson还通过加锁的方法提供了leaseTime的参数来指定加锁的时间。超过这个时间后锁便自动解开了。
+//
+//        // 加锁以后10秒钟自动解锁
+//        // 无需调用unlock方法手动解锁
+//        lock.lock(10, TimeUnit.SECONDS);
 
         // 尝试加锁，最多等待100秒，上锁以后10秒自动解锁
-        boolean res = lock.tryLock(100, 10, TimeUnit.SECONDS);
+        boolean res = lock.tryLock(10, 10, TimeUnit.SECONDS);
         if (res) {
             try {
+                log.info("获取锁成功！");
             } finally {
                 lock.unlock();
             }
+        }else {
+            log.info("获取锁失败！");
         }
-
-        //分布式锁提供了异步执行
-        lock.lockAsync();
-        lock.lockAsync(10, TimeUnit.SECONDS);
-        Future<Boolean> future = lock.tryLockAsync(100, 10, TimeUnit.SECONDS);
-
-        RLock fairLock = redissonClient.getFairLock("anyLock");
+//
+//        //分布式锁提供了异步执行
+//        lock.lockAsync();
+//        lock.lockAsync(10, TimeUnit.SECONDS);
+//        Future<Boolean> future = lock.tryLockAsync(100, 10, TimeUnit.SECONDS);
+//
+//        RLock fairLock = redissonClient.getFairLock("anyLock");
     }
 
 

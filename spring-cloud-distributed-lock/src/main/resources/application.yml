@@ -1,7 +1,7 @@
 server:
-  port: 8000
+  port: 8100
   servlet:
-    context-path: /yuexiang
+    context-path: /
   #最大工作线程数，默认200, 4核8g内存，线程数经验值800
   #操作系统做线程之间的切换调度是有系统开销的，所以不是越多越好。
   tomcat:
