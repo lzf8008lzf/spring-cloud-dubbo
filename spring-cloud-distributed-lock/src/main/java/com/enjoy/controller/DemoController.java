@@ -28,18 +28,18 @@ public class DemoController {
     public String sayHello() throws Exception{
 
         RLock lock = redissonClient.getLock("rlock");
-        boolean res = lock.tryLock(10, 12, TimeUnit.SECONDS);
+        // 为加锁等待3秒时间，并在加锁成功12秒钟后自动解开
+        boolean res = lock.tryLock(3, 12, TimeUnit.SECONDS);
         if (res) {
-            try {
-                log.info("获取锁成功！");
-                System.out.println(lock);
-//                Thread.sleep(11000);
-                lock.unlock();
-            } finally {
-//
-            }
+            log.info("获取锁成功！");
         }else {
             log.error("获取锁失败");
+        }
+        try {
+            System.out.println(lock);
+            Thread.sleep(11000);
+        } finally {
+            lock.unlock();
         }
 
         return "Hello world!";
