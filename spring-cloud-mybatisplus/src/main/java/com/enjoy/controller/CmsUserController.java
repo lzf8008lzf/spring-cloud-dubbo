@@ -30,5 +30,15 @@ public class CmsUserController {
 
         return cmsUser;
     }
+
+    @RequestMapping("updateuser")
+    public CmsUser updateuser() {
+        CmsUser cmsUser=cmsUserService.getById(1);
+
+        cmsUser.setNickName("张无忌");
+        cmsUserService.updateById(cmsUser);
+
+        return cmsUser;
+    }
 }
 
