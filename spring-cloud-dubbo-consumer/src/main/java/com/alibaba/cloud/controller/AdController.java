@@ -43,4 +43,10 @@ public class AdController {
         return dubboConsumer.blockService(seconds);
     }
 
+    @RequestMapping("lock")
+    public Results lock()
+    {
+        return dubboConsumer.distributedLock();
+    }
+
 }

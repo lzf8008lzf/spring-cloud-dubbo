@@ -16,4 +16,6 @@ public interface IDubboService {
     Results exception();
 
     Results blockService(int seconds);
+
+    Results distributedLock();
 }

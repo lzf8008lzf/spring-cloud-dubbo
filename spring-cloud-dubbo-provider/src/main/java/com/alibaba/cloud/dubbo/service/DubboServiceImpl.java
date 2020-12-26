@@ -7,6 +7,11 @@ import com.enjoy.cores.utils.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.rpc.RpcContext;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @program: spring-cloud-dubbo
@@ -19,6 +24,9 @@ import org.apache.dubbo.rpc.RpcContext;
         timeout = DubboConstants.PROVIDER_TIMEOUT,retries = DubboConstants.PROVIDER_RETRIES)
 @Slf4j
 public class DubboServiceImpl implements IDubboService{
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Override
     public Results sayHello(String name) {
@@ -72,6 +80,34 @@ public class DubboServiceImpl implements IDubboService{
             e.printStackTrace();
         }
         log.info("block success!");
+        return Results.ok();
+    }
+
+    @Override
+    public Results distributedLock() {
+        RLock lock = redissonClient.getFairLock("rlock");
+
+        // 尝试加锁，最多等待9秒，上锁以后6秒自动解锁
+        boolean res = false;
+        try {
+            res = lock.tryLock(9, 6, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (res) {
+            try {
+                log.info("获取锁成功！");
+//                try {
+//                    Thread.sleep(8*1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+            } finally {
+                lock.unlock();
+            }
+        }else {
+            log.info("获取锁失败！");
+        }
         return Results.ok();
     }
 }
