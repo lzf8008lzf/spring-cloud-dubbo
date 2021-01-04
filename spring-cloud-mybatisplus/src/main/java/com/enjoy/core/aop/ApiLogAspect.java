@@ -11,9 +11,7 @@ import org.springframework.util.StopWatch;
 
 
 /**
- * ApiController，切面处理类
- *
- * @author zcc
+ * 切面日志处理类
  */
 @Aspect
 @Component

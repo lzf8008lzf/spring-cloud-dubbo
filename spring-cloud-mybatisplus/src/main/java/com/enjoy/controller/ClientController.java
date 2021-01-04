@@ -43,7 +43,7 @@ public class ClientController {
         headers.add("timestamp", String.valueOf(new Date().getTime()));
         headers.add("nonce", "9885544154");
         String sign = SignUtil.createSign(headers.toSingleValueMap(),"mysecret123456");
-//        headers.add("sign", sign);
+        headers.add("sign", sign);
 
         HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(param, headers);
 
