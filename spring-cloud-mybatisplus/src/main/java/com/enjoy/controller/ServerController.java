@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 服务端
@@ -23,11 +25,13 @@ public class ServerController {
     public Object test(String userId, BigDecimal amount, String productId){
 
         //业务处理
-        System.out.println("-------------  " + userId);
-        System.out.println("-------------  " + amount);
-        System.out.println("-------------  " + productId);
+        Map<String, Object> data = new HashMap<>(3);
 
-        return AjaxResult.success("请求成功");
+        data.put("userId", userId);
+        data.put("amount", amount);
+        data.put("productId", productId);
+
+        return AjaxResult.success("请求成功",data);
     }
 
 }
