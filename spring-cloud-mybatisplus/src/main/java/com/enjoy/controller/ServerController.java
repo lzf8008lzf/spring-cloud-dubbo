@@ -1,6 +1,6 @@
 package com.enjoy.controller;
 
-import com.enjoy.core.annotation.Signature;
+import com.enjoy.core.annotation.ApiSignature;
 import com.enjoy.core.result.AjaxResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 public class ServerController {
 
     @PostMapping("/test")
-    @Signature
+    @ApiSignature
     public Object test(String userId, BigDecimal amount, String productId){
 
         //业务处理

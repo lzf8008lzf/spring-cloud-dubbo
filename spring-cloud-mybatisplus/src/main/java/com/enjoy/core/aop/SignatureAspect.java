@@ -1,17 +1,21 @@
 package com.enjoy.core.aop;
 
+import com.enjoy.core.annotation.ApiSignature;
 import com.enjoy.core.result.AjaxResult;
 import com.enjoy.core.utils.SignUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +36,7 @@ public class SignatureAspect {
     private HttpServletRequest request;
 
     // 配置织入点
-    @Pointcut("@annotation(com.enjoy.core.annotation.Signature)")
+    @Pointcut("@annotation(com.enjoy.core.annotation.ApiSignature)")
     public void dataScopePointCut() {
     }
 
@@ -43,6 +47,13 @@ public class SignatureAspect {
 
     protected Object handleSignature(final ProceedingJoinPoint joinPoint) {
         try {
+            Signature signature = joinPoint.getSignature();
+            MethodSignature methodSignature = (MethodSignature) signature;
+            Method method = methodSignature.getMethod();
+
+            ApiSignature apiSignature = method.getAnnotation(ApiSignature.class);
+            log.info(apiSignature.method());
+
             // 供应商的id，验证用户的真实性
             String appid = request.getHeader("appid");
             // 请求发起的时间
