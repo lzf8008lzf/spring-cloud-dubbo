@@ -7,8 +7,8 @@ import com.enjoy.core.utils.SignUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +24,7 @@ import java.util.Map;
 public class ClientController {
 
     @Autowired
-    private RestTemplate restTemplate;
-
+    private HttpServletRequest request;
 
     @RequestMapping("/send")
     public Object send() {
@@ -43,7 +42,10 @@ public class ClientController {
         String sign = SignUtil.createSign(headers,"mysecret123456");
         headers.put("sign", sign);
 
-        String retStr = RestTemplateUtils.httpPost("http://127.0.0.1:8100/server/test",param,headers);
+        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+        System.out.println(basePath);
+
+        String retStr = RestTemplateUtils.httpPost(basePath+"/server/test",param,headers);
         AjaxResult jsonRes = JSON.parseObject(retStr, AjaxResult.class);
 
         return jsonRes;

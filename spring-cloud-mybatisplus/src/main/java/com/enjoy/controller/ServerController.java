@@ -22,7 +22,7 @@ public class ServerController {
 
     @PostMapping("/test")
     @ApiSignature
-    public Object test(String userId, BigDecimal amount, String productId){
+    public Object test(Integer userId, BigDecimal amount, String productId){
 
         //业务处理
         Map<String, Object> data = new HashMap<>(3);
@@ -31,7 +31,7 @@ public class ServerController {
         data.put("amount", amount);
         data.put("productId", productId);
 
-        return AjaxResult.success("请求成功",data);
+        return AjaxResult.success(data);
     }
 
 }
