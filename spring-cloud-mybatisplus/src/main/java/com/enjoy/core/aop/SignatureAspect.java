@@ -41,7 +41,7 @@ public class SignatureAspect {
     }
 
     @Around("dataScopePointCut()")
-    public Object doBefore(ProceedingJoinPoint point) throws Throwable {
+    public Object around(ProceedingJoinPoint point) throws Throwable {
         return handleSignature(point);
     }
 

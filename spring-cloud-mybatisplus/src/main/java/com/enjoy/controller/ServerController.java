@@ -2,6 +2,8 @@ package com.enjoy.controller;
 
 import com.enjoy.core.annotation.ApiSignature;
 import com.enjoy.core.result.AjaxResult;
+import com.enjoy.service.ServerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,16 +22,15 @@ import java.util.Map;
 @RestController
 public class ServerController {
 
+    @Autowired
+    private ServerService serverService;
+
     @PostMapping("/test")
     @ApiSignature
     public Object test(Integer userId, BigDecimal amount, String productId){
 
         //业务处理
-        Map<String, Object> data = new HashMap<>(3);
-
-        data.put("userId", userId);
-        data.put("amount", amount);
-        data.put("productId", productId);
+        Map<String, Object> data = serverService.test(userId, amount, productId);
 
         return AjaxResult.success(data);
     }
