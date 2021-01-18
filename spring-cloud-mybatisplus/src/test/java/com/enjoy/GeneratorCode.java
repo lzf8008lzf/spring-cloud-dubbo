@@ -47,7 +47,7 @@ public class GeneratorCode {
 //        log.info(environment.getProperty("spring.datasource.url"));
 
         String packageName = "com.enjoy";
-        generateByTables(packageName, "CMS_USER");
+        generateByTables(packageName, "lucky_pool");
     }
 
     private void generateByTables(String packageName, String... tableNames) {
