@@ -23,6 +23,8 @@ public class Lucky3dServiceTest {
 
     public static void main(String[] args) {
 
+        System.out.println(NumberUtil.isPrime(13));
+
         System.out.println(NumberUtil.isOdd(35));
 
         System.out.println(NumberUtil.format3D(999));
