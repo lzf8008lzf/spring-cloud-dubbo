@@ -36,6 +36,14 @@ public class EasyExcelTest {
                 // 分页去数据库查询数据 这里可以去数据库查询每一页的数据
                 List<AdBillInfoPO> data = data();
                 excelWriter.write(data, writeSheet);
+
+                // 合计部分
+                List<List<String>> totalListList = new ArrayList<List<String>>();
+                List<String> totalList = new ArrayList<String>();
+                totalListList.add(totalList);
+                totalList.add("合计：");
+                totalList.add("80000000000");
+                excelWriter.write(totalListList, writeSheet);
             }
         } finally {
             // 千万别忘记finish 会帮忙关闭流
