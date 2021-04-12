@@ -55,7 +55,7 @@ spring:
     ##  Hikari 连接池配置 ------ 详细配置请访问：https://github.com/brettwooldridge/HikariCP
     hikari:
       ## 连接池名称
-      pool-name: MyHikariCP
+      pool-name: HikariPool
       ## 此属性控制从池返回的连接的默认自动提交行为,默认值：true
       auto-commit: true
       connection-test-query: SELECT 1

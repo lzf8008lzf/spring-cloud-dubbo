@@ -2,6 +2,8 @@ package com.enjoy;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
@@ -17,7 +19,11 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +37,55 @@ import java.util.List;
 public class EasyExcelTest {
 
     public static void main(String[] args){
-        writeFileHeader();
+//        Date billDate = getDate("20210101","yyyyMMdd");
+//        System.out.println(billDate);
+//
+//        String sheetName = parseDateToStr("yyyy-MM",billDate);
+//        System.out.println(sheetName);
+//
+//        int month = getMonth(billDate);
+//        System.out.println(month);
+//        writeFileHeader();
+        int year = getYear(new Date());
+        System.out.println(year);
+
+        List list = new ArrayList(3);
+        for(int i=2020;i<=year;i++){
+            list.add(i);
+        }
+        System.out.println(JSONUtil.toJsonStr(list));
+    }
+
+    public static int getYear(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+
+        return year;
+    }
+
+    public static int getMonth(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH) + 1;
+
+        return month;
+    }
+
+    public static final String parseDateToStr(final String format, final Date date)
+    {
+        return new SimpleDateFormat(format).format(date);
+    }
+
+    public static Date getDate(String date,String format){
+        DateFormat format1 = new SimpleDateFormat(format);
+        Date date1 = null;
+        try {
+            date1 = format1.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date1;
     }
 
     private static void writeStream(){
@@ -138,6 +192,8 @@ public class EasyExcelTest {
             totalList.add("80000000000");
             excelWriter.write(totalListList, writeSheet);
 
+        } catch (Exception e){
+            System.err.println(e);
         } finally {
             // 千万别忘记finish 会帮忙关闭流
             if (excelWriter != null) {
@@ -162,7 +218,7 @@ public class EasyExcelTest {
             List<List<String>> totalListList = new ArrayList<List<String>>();
             List<String> totalList = new ArrayList<String>();
             totalListList.add(totalList);
-            for(int j=0;j<7;j++) {
+            for(int j=0;j<6;j++) {
                 totalList.add("");
             }
             totalList.add("合计：");
@@ -180,13 +236,15 @@ public class EasyExcelTest {
 //                List<List<String>> totalListList = new ArrayList<List<String>>();
 //                List<String> totalList = new ArrayList<String>();
 //                totalListList.add(totalList);
-//                for(int j=0;j<7;j++) {
+//                for(int j=0;j<6;j++) {
 //                    totalList.add("");
 //                }
 //                totalList.add("合计：");
 //                totalList.add("80000000000");
 //                excelWriter.write(totalListList, writeSheet);
 //            }
+        } catch (Exception e){
+            System.err.println(e);
         } finally {
             // 千万别忘记finish 会帮忙关闭流
             if (excelWriter != null) {

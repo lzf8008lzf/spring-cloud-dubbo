@@ -24,6 +24,7 @@ import org.redisson.config.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 
@@ -53,6 +54,9 @@ public class RedissonCache implements Cache {
 
     @Override
     public void putObject(Object o, Object o1) {
+        if(Objects.isNull(o)||Objects.isNull(o1)){
+            return ;
+        }
         check();
         String key = CodecUtil.getKey(o);
         mapCache.put(key, o1, timeToLive, TimeUnit.MILLISECONDS, maxIdleTime, TimeUnit.MILLISECONDS);
