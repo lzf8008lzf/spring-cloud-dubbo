@@ -13,6 +13,8 @@ public class MD5Util
 {
     private static final Logger log = LoggerFactory.getLogger(MD5Util.class);
 
+    private static final String charseName ="UTF-8";
+
     private static byte[] md5(String s)
     {
         MessageDigest algorithm;
@@ -20,7 +22,7 @@ public class MD5Util
         {
             algorithm = MessageDigest.getInstance("MD5");
             algorithm.reset();
-            algorithm.update(s.getBytes("UTF-8"));
+            algorithm.update(s.getBytes(charseName));
             byte[] messageDigest = algorithm.digest();
             return messageDigest;
         }
@@ -55,7 +57,7 @@ public class MD5Util
     {
         try
         {
-            return new String(toHex(md5(s)).getBytes("UTF-8"), "UTF-8");
+            return new String(toHex(md5(s)).getBytes(charseName), charseName);
         }
         catch (Exception e)
         {

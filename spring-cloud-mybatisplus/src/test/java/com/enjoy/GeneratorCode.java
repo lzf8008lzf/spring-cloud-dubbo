@@ -107,11 +107,9 @@ public class GeneratorCode {
         // 关闭默认 xml 生成，调整生成 至 根目录
         TemplateConfig tc = new TemplateConfig();
         tc.setXml(null);
-        mpg.setTemplate(tc);
 
         // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
-        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
-        // TemplateConfig tc = new TemplateConfig();
+        // 放置自己项目的 src/main/resources/templates 目录下, 默认名称可以不配置，也可以自定义模板名称
         // tc.setController("...");
         // tc.setEntity("...");
         // tc.setMapper("...");
@@ -119,7 +117,7 @@ public class GeneratorCode {
         // tc.setService("...");
         // tc.setServiceImpl("...");
         // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
-        // mpg.setTemplate(tc);
+         mpg.setTemplate(tc);
 
         //生成文件 配置
         mpg.setGlobalConfig(config)  //全局 相关配置

@@ -2,6 +2,7 @@ package com.enjoy;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.enjoy.core.utils.CodeGenerateUtils;
+import com.enjoy.core.utils.MD5Util;
 
 /**
  * MySQL 数据库代码生成类
@@ -24,7 +25,9 @@ public class MySQLCodeGenerator {
         String [] fieldPrefixes = {};
         // 基础包名
         String packageName = "com.example";
-        CodeGenerateUtils.execute(dbType, dbUrl, username, password, driver, tablePrefixes, tableNames, packageName, fieldPrefixes);
+//        CodeGenerateUtils.execute(dbType, dbUrl, username, password, driver, tablePrefixes, tableNames, packageName, fieldPrefixes);
+
+        System.out.println(MD5Util.hash("08affcd1d256a4b2"));
     }
 
 }
