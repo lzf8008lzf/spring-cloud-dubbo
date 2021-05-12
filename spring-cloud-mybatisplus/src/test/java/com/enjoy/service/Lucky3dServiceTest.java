@@ -1,13 +1,21 @@
 package com.enjoy.service;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.enjoy.MybatisplusApplication;
 import com.enjoy.core.utils.NumberUtil;
+import com.enjoy.core.utils.RestTemplateUtils;
+import com.enjoy.core.utils.SignUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: spring-cloud-dubbo
@@ -23,15 +31,33 @@ public class Lucky3dServiceTest {
 
     public static void main(String[] args) {
 
-        System.out.println(NumberUtil.isPrime(13));
+        Map<String, Object> param = new HashMap<>(3);
+        param.put("uid", 9527);
+        param.put("time_expire", 3000);
 
-        System.out.println(NumberUtil.isOdd(35));
 
-        System.out.println(NumberUtil.format3D(999));
+        Map<String, String> headers = new HashMap<>(4);
+        headers.put("Content-Type", "application/x-www-form-urlencoded");
+        headers.put("Accept-Charset", "UTF-8");
+        headers.put("X-Ca-Front-AccessKey", "yx43fjfo3q9xtw8fcf");
+        headers.put("X-Ca-Front-Timestamp", DateUtil.current()+"");
+        headers.put("X-Ca-Front-Noncestr", RandomUtil.randomString(16));
 
-        System.out.println(NumberUtil.sum(789));
+        String sign = SignUtil.createSign(param,"mysecret123456");
+        headers.put("X-Ca-Front-Signature", sign);
 
-        System.out.println(NumberUtil.oddEven("789"));
+        String response = RestTemplateUtils.httpGet("http://test.openapi.yuexiangvideo.com/api/token/set?uid=9527&time_expire=3000",headers);
+
+        System.out.println(response);
+//        System.out.println(NumberUtil.isPrime(13));
+//
+//        System.out.println(NumberUtil.isOdd(35));
+//
+//        System.out.println(NumberUtil.format3D(999));
+//
+//        System.out.println(NumberUtil.sum(789));
+//
+//        System.out.println(NumberUtil.oddEven("789"));
     }
 
 }

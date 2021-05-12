@@ -82,7 +82,7 @@ public class SignatureAspect {
 //                // 如果nonce没有存在缓存中，则加入，并设置失效时间（秒）
 //                redisUtil.hset("third_party_key", APPID + nonce, nonce, time);
 //            }
-            Map<String,String> signObj = new HashMap<>(3);
+            Map<String,Object> signObj = new HashMap<>(3);
             signObj.put("appid", appid);
             signObj.put("timestamp", timestamp);
             signObj.put("nonce", nonce);

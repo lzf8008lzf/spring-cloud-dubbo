@@ -39,7 +39,7 @@ public class ClientController {
         headers.put("appid", "9527");
         headers.put("timestamp", String.valueOf(new Date().getTime()));
         headers.put("nonce", "9885544154");
-        String sign = SignUtil.createSign(headers,"mysecret123456");
+        String sign = SignUtil.createSign(param,"mysecret123456");
         headers.put("sign", sign);
 
         String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();

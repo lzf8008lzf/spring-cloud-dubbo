@@ -1,7 +1,5 @@
 package com.enjoy.core.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -18,23 +16,23 @@ public class SignUtil {
      * @param secret
      * @return
      */
-    public static String createSign(Map<String, String> data, String secret) {
+    public static String createSign(Map<String, Object> data, String secret) {
         // 由于map是无序的，这里主要是对key进行排序（字典序）
         Set<String> keySet = data.keySet();
         String[] keyArr = keySet.toArray(new String[keySet.size()]);
         Arrays.sort(keyArr);
         StringBuilder sb = new StringBuilder();
-        for (String k : keyArr) {
-            if (StringUtils.isNotEmpty(data.get(k))) {
-                sb.append(k).append("=").append(data.get(k)).append("&");
-            }
+        for (String key : keyArr) {
+            sb.append(key).append("=").append(data.get(key)).append("&");
         }
         // secret最后拼接
         sb.append("secret=").append(secret);
-        return MD5Util.hash(sb.toString());
+        String md5Str = MD5Util.hash(sb.toString());
+        String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret);
+        return sha256Str.toUpperCase();
     }
 
-    public static boolean checkSign(Map<String, String> data, String secret,String sign){
+    public static boolean checkSign(Map<String, Object> data, String secret,String sign){
         String genSign = createSign(data,secret);
         return genSign.equals(sign);
     }
