@@ -4,12 +4,18 @@ import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.enjoy.MybatisplusApplication;
+import com.enjoy.core.utils.LongRedisTemplate;
 import com.enjoy.core.utils.NumberUtil;
 import com.enjoy.core.utils.RestTemplateUtils;
 import com.enjoy.core.utils.SignUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.DecimalFormat;
@@ -29,12 +35,36 @@ import java.util.Map;
 @Slf4j
 public class Lucky3dServiceTest {
 
+    @Autowired
+    private LongRedisTemplate longRedisTemplate;
+
+    @Autowired
+    private StringRedisTemplate redisTemplateLocal;
+
+    @Test
+    public void redisTest(){
+        longRedisTemplate.opsForValue().set("yuexinag",3000L);
+        redisTemplateLocal.opsForValue().set("mall","商城redis");
+    }
+
     public static void main(String[] args) {
 
         Map<String, Object> param = new HashMap<>(3);
         param.put("uid", 9527);
         param.put("time_expire", 3000);
 
+//        param.put("imei", reqParam.get("imei"));
+//        param.put("idfa", reqParam.get("idfa"));
+//        param.put("system", reqParam.get("clientType"));
+//        param.put("channel", reqParam.get("channel"));
+//        param.put("device", reqParam.get("phoneBrand"));
+//        param.put("osversion", reqParam.get("osVersion"));
+//        param.put("version", reqParam.get("appVersion"));
+//        param.put("pushid", reqParam.get("pushId"));
+//        param.put("resolution", reqParam.get("resolution"));
+//        param.put("lat", reqParam.get(""));
+//        param.put("lng", reqParam.get(""));
+//        param.put("ip", "");
 
         Map<String, String> headers = new HashMap<>(4);
         headers.put("Content-Type", "application/x-www-form-urlencoded");
