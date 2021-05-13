@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -26,6 +27,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,11 +89,14 @@ public class RedisConfig {
      */
     private LettuceConnectionFactory createLettuceConnectionFactory(RedisProperties redisProperties){
 
-        //redis配置
-        RedisConfiguration redisConfiguration = new
-                RedisStandaloneConfiguration(redisProperties.getHost(),redisProperties.getPort());
-        ((RedisStandaloneConfiguration) redisConfiguration).setDatabase(5);
-        ((RedisStandaloneConfiguration) redisConfiguration).setPassword(redisProperties.getPassword());
+        /* ========= 基本配置 ========= */
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName(redisProperties.getHost());
+        configuration.setPort(redisProperties.getPort());
+        configuration.setDatabase(5);
+//        if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+            configuration.setPassword(redisProperties.getPassword());
+//        }
 
         //连接池配置
         GenericObjectPoolConfig genericObjectPoolConfig =
@@ -101,21 +106,26 @@ public class RedisConfig {
         genericObjectPoolConfig.setMaxTotal(redisProperties.getLettuce().getPool().getMaxActive());
         genericObjectPoolConfig.setMaxWaitMillis(redisProperties.getLettuce().getPool().getMaxWait().toMillis());
 
-        //redis客户端配置
-        LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder
-                builder =  LettucePoolingClientConfiguration.builder().
-                commandTimeout(redisProperties.getTimeout());
-
-        builder.shutdownTimeout(redisProperties.getLettuce().getShutdownTimeout());
+        /* ========= jedis pool ========= */
+        /*
+        JedisClientConfiguration.DefaultJedisClientConfigurationBuilder builder = (JedisClientConfiguration.DefaultJedisClientConfigurationBuilder) JedisClientConfiguration
+                .builder();
+        builder.connectTimeout(redisProperties.getTimeout());
+        builder.usePooling();
         builder.poolConfig(genericObjectPoolConfig);
-        LettuceClientConfiguration lettuceClientConfiguration = builder.build();
+        JedisConnectionFactory connectionFactory = new JedisConnectionFactory(configuration, builder.build());
+        // 连接池初始化
+        connectionFactory.afterPropertiesSet();
+        */
 
-        //根据配置和客户端配置创建连接
-        LettuceConnectionFactory lettuceConnectionFactory = new
-                LettuceConnectionFactory(redisConfiguration,lettuceClientConfiguration);
-        lettuceConnectionFactory .afterPropertiesSet();
+        /* ========= lettuce pool ========= */
+        LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+        builder.poolConfig(genericObjectPoolConfig);
+        builder.commandTimeout(redisProperties.getTimeout());
+        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(configuration, builder.build());
+        connectionFactory.afterPropertiesSet();
 
-        return lettuceConnectionFactory;
+        return connectionFactory;
     }
 
     /**
