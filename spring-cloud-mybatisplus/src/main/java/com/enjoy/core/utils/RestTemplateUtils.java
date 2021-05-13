@@ -1,5 +1,6 @@
 package com.enjoy.core.utils;
 
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -43,7 +44,12 @@ public class RestTemplateUtils {
     public static String httpGet(String url,  Map<String, String> headerMap){
 
         HttpHeaders headers = new HttpHeaders();
-        headerMap.forEach((k,v)->{headers.add(k,v);});
+
+        if(MapUtils.isNotEmpty(headerMap)) {
+            headerMap.forEach((k, v) -> {
+                headers.add(k, v);
+            });
+        }
 
         HttpEntity requestEntity = new HttpEntity(headers);
 
@@ -80,12 +86,21 @@ public class RestTemplateUtils {
     public static String httpPost(String url, Map<String, Object> paramMap, Map<String, String> headerMap){
 
         MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
-        paramMap.forEach((k,v)->{param.add(k,v);});
+
+        if(MapUtils.isNotEmpty(paramMap)) {
+            paramMap.forEach((k, v) -> {
+                param.add(k, v);
+            });
+        }
 
         HttpHeaders headers = new HttpHeaders();
-        headerMap.forEach((k,v)->{headers.add(k,v);});
+        if(MapUtils.isNotEmpty(headerMap)) {
+            headerMap.forEach((k, v) -> {
+                headers.add(k, v);
+            });
+        }
 
-        HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(param, headers);
+        HttpEntity<MultiValueMap<String,Object>> requestEntity = new HttpEntity<>(param,headers);
 
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(url,requestEntity,String.class);
@@ -95,5 +110,9 @@ public class RestTemplateUtils {
         }
 
         return null;
+    }
+
+    public static String httpPostHeader(String url, Map<String, String> headerMap){
+        return httpPost(url,null,headerMap);
     }
 }

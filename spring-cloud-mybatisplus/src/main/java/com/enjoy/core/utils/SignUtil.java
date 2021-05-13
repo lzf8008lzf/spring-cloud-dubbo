@@ -1,5 +1,9 @@
 package com.enjoy.core.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +13,8 @@ import java.util.Set;
  *
  **/
 public class SignUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(SignUtil.class);
 
     /**
      * 获取签名信息
@@ -26,10 +32,15 @@ public class SignUtil {
             sb.append(key).append("=").append(data.get(key)).append("&");
         }
         // secret最后拼接
-        sb.append("secret=").append(secret);
-        String md5Str = MD5Util.hash(sb.toString());
-        String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret);
-        return sha256Str.toUpperCase();
+//        sb.append("secret=").append(secret);
+
+        sb.deleteCharAt(sb.lastIndexOf("&"));
+
+        String md5Str = DigestUtils.md5DigestAsHex(sb.toString().getBytes());
+        String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret).toUpperCase();
+
+        log.info("param:{},md5:{},sha256:{}",sb.toString(),md5Str,sha256Str);
+        return sha256Str;
     }
 
     public static boolean checkSign(Map<String, Object> data, String secret,String sign){

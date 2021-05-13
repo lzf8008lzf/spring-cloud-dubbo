@@ -125,7 +125,7 @@ public class CodecUtil {
             byte[] bytes = sha256_HMAC.doFinal(message.getBytes());
             hash = Hex.encodeHexString(bytes);
         } catch (Exception e) {
-            System.out.println("Error HmacSHA256 ===========" + e.getMessage());
+            logger.error("Error HmacSHA256" + e.getMessage());
         }
         return hash;
     }

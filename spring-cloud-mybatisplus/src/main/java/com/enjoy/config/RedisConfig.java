@@ -1,9 +1,5 @@
 package com.enjoy.config;
 
-import com.enjoy.core.utils.LongRedisTemplate;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.redisson.Redisson;
@@ -14,24 +10,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.redis.connection.RedisConfiguration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 
 /**
  * @program: spring-cloud-dubbo
@@ -74,6 +61,12 @@ public class RedisConfig {
     }
 
     @Bean
+    @Primary
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        return new StringRedisTemplate(redisConnectionFactory);
+    }
+
+    @Bean(value = "redisTemplateLocal")
     public StringRedisTemplate redisTemplateLocal(RedisProperties redisProperties) {
         RedisConnectionFactory redisConnectionFactory=createLettuceConnectionFactory(redisProperties);
         return createRedisTemplate(redisConnectionFactory);
@@ -129,8 +122,6 @@ public class RedisConfig {
     }
 
     /**
-     * json 实现 redisTemplate
-     * <p>
      * 该方法不能加 @Bean 否则不管如何调用，connectionFactory都会是默认配置
      *
      * @param redisConnectionFactory
