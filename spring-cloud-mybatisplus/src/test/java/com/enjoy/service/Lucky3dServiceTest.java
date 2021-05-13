@@ -44,6 +44,9 @@ public class Lucky3dServiceTest {
 
     public static void main(String[] args) {
 
+        long timestamp = DateUtil.current();
+        String noncestr = RandomUtil.randomString(16);
+
         Map<String, Object> param = new HashMap<>(3);
         param.put("uid", 9527);
         param.put("time_expire", 3000);
@@ -65,17 +68,15 @@ public class Lucky3dServiceTest {
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept-Charset", "UTF-8");
         headers.put("X-Ca-Front-AccessKey", "yx9d49dxea9z2r7s75");
-        headers.put("X-Ca-Front-Timestamp", DateUtil.current()+"");
-        headers.put("X-Ca-Front-Noncestr", RandomUtil.randomString(16));
+        headers.put("X-Ca-Front-Timestamp", timestamp+"");
+        headers.put("X-Ca-Front-Noncestr", noncestr);
 
-        String sign = SignUtil.createSign(param,"28609A84B94C49DFA0DC1F85DD578A19");
+        String sign = SignUtil.createSign(param,"28609A84B94C49DFA0DC1F85DD578A19",timestamp+noncestr);
         headers.put("X-Ca-Front-Signature", sign);
 
-//        String response = RestTemplateUtils.httpGet("http://test.openapi.yuexiangvideo.com/api/token/set?uid=9527&time_expire=3000",headers);
+        String response = RestTemplateUtils.httpPostHeader("http://test.openapi.yuexiangvideo.com/api/token/set?uid=9527&time_expire=3000",headers);
 
-//        String response = RestTemplateUtils.httpPostHeader("http://test.openapi.yuexiangvideo.com/api/token/set?uid=9527&time_expire=3000",headers);
-//
-//        System.out.println(response);
+        System.out.println(response);
 //        System.out.println(NumberUtil.isPrime(13));
 //
 //        System.out.println(NumberUtil.isOdd(35));
