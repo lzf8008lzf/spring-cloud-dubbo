@@ -16,57 +16,51 @@ public class SignUtil {
 
     private static final Logger log = LoggerFactory.getLogger(SignUtil.class);
 
+    public static String packageParmeter(Map<String, Object> param){
+        // 由于map是无序的，这里主要是对key进行排序（字典序）
+        Set<String> keySet = param.keySet();
+        String[] keyArr = keySet.toArray(new String[keySet.size()]);
+        Arrays.sort(keyArr);
+        StringBuilder sb = new StringBuilder();
+        for (String key : keyArr) {
+            sb.append(key).append("=").append(param.get(key)).append("&");
+        }
+
+        sb.deleteCharAt(sb.lastIndexOf("&"));
+
+        return sb.toString();
+    }
+
     /**
      * 获取签名信息
-     * @param data
+     * @param param
      * @param secret
      * @param appendStr
      * @return
      */
-    public static String createSign(Map<String, Object> data, String secret,String appendStr) {
-        // 由于map是无序的，这里主要是对key进行排序（字典序）
-        Set<String> keySet = data.keySet();
-        String[] keyArr = keySet.toArray(new String[keySet.size()]);
-        Arrays.sort(keyArr);
-        StringBuilder sb = new StringBuilder();
-        for (String key : keyArr) {
-            sb.append(key).append("=").append(data.get(key)).append("&");
-        }
-        // secret最后拼接
-//        sb.append("secret=").append(secret);
+    public static String createSign(Map<String, Object> param, String secret,String appendStr) {
 
-        sb.deleteCharAt(sb.lastIndexOf("&"));
+        String paramStr = packageParmeter(param);
 
-        String md5Str = DigestUtils.md5DigestAsHex(sb.toString().getBytes())+appendStr;
+        String md5Str = DigestUtils.md5DigestAsHex(paramStr.getBytes())+appendStr;
         String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret).toUpperCase();
 
-        log.info("param:{},md5:{},sha256:{}",sb.toString(),md5Str,sha256Str);
+        log.info("param:{},md5:{},sha256:{}",paramStr,md5Str,sha256Str);
         return sha256Str;
     }
     /**
      * 获取签名信息
-     * @param data
+     * @param param
      * @param secret
      * @return
      */
-    public static String createSign(Map<String, Object> data, String secret) {
-        // 由于map是无序的，这里主要是对key进行排序（字典序）
-        Set<String> keySet = data.keySet();
-        String[] keyArr = keySet.toArray(new String[keySet.size()]);
-        Arrays.sort(keyArr);
-        StringBuilder sb = new StringBuilder();
-        for (String key : keyArr) {
-            sb.append(key).append("=").append(data.get(key)).append("&");
-        }
-        // secret最后拼接
-//        sb.append("secret=").append(secret);
+    public static String createSign(Map<String, Object> param, String secret) {
+        String paramStr = packageParmeter(param);
 
-        sb.deleteCharAt(sb.lastIndexOf("&"));
-
-        String md5Str = DigestUtils.md5DigestAsHex(sb.toString().getBytes());
+        String md5Str = DigestUtils.md5DigestAsHex(paramStr.getBytes());
         String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret).toUpperCase();
 
-        log.info("param:{},md5:{},sha256:{}",sb.toString(),md5Str,sha256Str);
+        log.info("param:{},md5:{},sha256:{}",paramStr,md5Str,sha256Str);
         return sha256Str;
     }
 
