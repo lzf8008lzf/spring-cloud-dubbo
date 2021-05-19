@@ -57,7 +57,12 @@ public class Lucky3dServiceTest {
 
         String url =action+"?"+SignUtil.packageParmeter(param);
 
-        String response = RestTemplateUtils.httpPostHeader(url,headers);
+        String response = null;
+        try {
+            response = RestTemplateUtils.httpPostHeader(url,headers);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+        }
 
         return response;
     }
