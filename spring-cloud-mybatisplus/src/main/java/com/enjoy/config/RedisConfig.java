@@ -97,6 +97,7 @@ public class RedisConfig {
         genericObjectPoolConfig.setMinIdle(redisProperties.getLettuce().getPool().getMinIdle());
         genericObjectPoolConfig.setMaxTotal(redisProperties.getLettuce().getPool().getMaxActive());
         genericObjectPoolConfig.setMaxWaitMillis(redisProperties.getLettuce().getPool().getMaxWait().toMillis());
+//        genericObjectPoolConfig.setNumTestsPerEvictionRun((int)redisProperties.getJedis().getPool().getTimeBetweenEvictionRuns().get(ChronoUnit.SECONDS));
 
         /* ========= jedis pool ========= */
         /*

@@ -69,9 +69,12 @@ public class Lucky3dServiceTest {
 
     public static void main(String[] args) {
 
+
         Map<String, Object> param = new HashMap<>(3);
         param.put("uid", 9527);
-        param.put("time_expire", 3000);
+        param.put("time_expire",30000);
+//        param.put("fields[0]", "avatar");
+//        param.put("fields[1]", "sign");
 
 //        param.put("imei", reqParam.get("imei"));
 //        param.put("idfa", reqParam.get("idfa"));
