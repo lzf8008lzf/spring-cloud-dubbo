@@ -97,4 +97,27 @@ public class SignUtil {
         return genSign.equals(sign);
     }
 
+    /**
+     * 生成微信小程序签名
+     * @param param
+     * @param secret
+     * @return
+     */
+    public static String createMiniSign(Map<String, Object> param, String secret) {
+
+        // 由于map是无序的，这里主要是对key进行排序（字典序）
+        Set<String> keySet = param.keySet();
+        String[] keyArr = keySet.toArray(new String[keySet.size()]);
+        Arrays.sort(keyArr);
+        StringBuilder sb = new StringBuilder();
+        for (String key : keyArr) {
+            sb.append(key).append(param.get(key));
+        }
+
+        String paramStr = sb.toString();
+        String md5Str = DigestUtils.md5DigestAsHex(paramStr.getBytes());
+
+        log.info("param:{},md5:{}",paramStr,md5Str);
+        return md5Str;
+    }
 }
