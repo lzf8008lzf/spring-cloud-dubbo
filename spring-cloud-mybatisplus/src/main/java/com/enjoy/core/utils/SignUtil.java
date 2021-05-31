@@ -1,5 +1,6 @@
 package com.enjoy.core.utils;
 
+import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -68,12 +69,10 @@ public class SignUtil {
      */
     public static String createSign(Map<String, Object> param, String secret,String appendStr) {
 
-        String paramStr = packageSign(param);
+        String paramStr = JSONUtil.toJsonStr(param)+appendStr;
+        String sha256Str = CodecUtil.sha256_HMAC(paramStr,secret).toUpperCase();
 
-        String md5Str = DigestUtils.md5DigestAsHex(paramStr.getBytes())+appendStr;
-        String sha256Str = CodecUtil.sha256_HMAC(md5Str,secret).toUpperCase();
-
-        log.info("param:{},md5:{},sha256:{}",paramStr,md5Str,sha256Str);
+        log.info("param:{},sha256:{}",paramStr,sha256Str);
         return sha256Str;
     }
     /**

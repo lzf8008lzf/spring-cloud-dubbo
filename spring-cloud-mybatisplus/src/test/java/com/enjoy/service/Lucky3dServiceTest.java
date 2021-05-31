@@ -2,6 +2,7 @@ package com.enjoy.service;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.json.JSONUtil;
 import com.enjoy.MybatisplusApplication;
 import com.enjoy.core.utils.RestTemplateUtils;
 import com.enjoy.core.utils.SignUtil;
@@ -46,7 +47,7 @@ public class Lucky3dServiceTest {
         long timestamp = DateUtil.current();
         String noncestr = RandomUtil.randomString(16);
         Map<String, String> headers = new HashMap<>(4);
-        headers.put("Content-Type", "application/x-www-form-urlencoded");
+        headers.put("Content-Type", "application/json");
         headers.put("Accept-Charset", "UTF-8");
         headers.put("X-Ca-Front-AccessKey", accessKey);
         headers.put("X-Ca-Front-Timestamp", timestamp+"");
@@ -55,11 +56,11 @@ public class Lucky3dServiceTest {
         String sign = SignUtil.createSign(param,screte,timestamp+noncestr);
         headers.put("X-Ca-Front-Signature", sign);
 
-        String url =action+"?"+SignUtil.packageParmeter(param);
+        String url =action;
 
         String response = null;
         try {
-            response = RestTemplateUtils.httpPostHeader(url,headers);
+            response = RestTemplateUtils.httpPostHeader(url, JSONUtil.toJsonStr(param),headers);
         } catch (Exception e) {
             log.error(e.getMessage(),e);
         }
@@ -71,26 +72,14 @@ public class Lucky3dServiceTest {
 
 
         Map<String, Object> param = new HashMap<>(3);
-        param.put("uid", 9527);
-        param.put("time_expire",30000);
-//        param.put("fields[0]", "avatar");
-//        param.put("fields[1]", "sign");
+//        param.put("uid", 9527);
+//        param.put("time_expire",30000);
+//
+//        String response = callServer("http://test.openapi.yuexiangvideo.com/api/token/set",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
 
-//        param.put("imei", reqParam.get("imei"));
-//        param.put("idfa", reqParam.get("idfa"));
-//        param.put("system", reqParam.get("clientType"));
-//        param.put("channel", reqParam.get("channel"));
-//        param.put("device", reqParam.get("phoneBrand"));
-//        param.put("osversion", reqParam.get("osVersion"));
-//        param.put("version", reqParam.get("appVersion"));
-//        param.put("pushid", reqParam.get("pushId"));
-//        param.put("resolution", reqParam.get("resolution"));
-//        param.put("lat", reqParam.get(""));
-//        param.put("lng", reqParam.get(""));
-//        param.put("ip", "");
-
-
-        String response = callServer("http://test.openapi.yuexiangvideo.com/api/token/set",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
+        param.put("scene","login");
+        param.put("mobile","15810772056");
+        String response = callServer("http://test.openapi.yuexiangvideo.com/api/sms",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
 
         System.out.println(response);
 //        System.out.println(NumberUtil.isPrime(13));

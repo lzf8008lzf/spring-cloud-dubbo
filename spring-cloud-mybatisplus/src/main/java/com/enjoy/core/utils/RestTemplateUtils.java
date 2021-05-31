@@ -3,10 +3,7 @@ package com.enjoy.core.utils;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -112,7 +109,24 @@ public class RestTemplateUtils {
         return null;
     }
 
-    public static String httpPostHeader(String url, Map<String, String> headerMap){
-        return httpPost(url,null,headerMap);
+    public static String httpPostHeader(String url,String requestBody, Map<String, String> headerMap){
+
+        HttpHeaders headers = new HttpHeaders();
+        if(MapUtils.isNotEmpty(headerMap)) {
+            headerMap.forEach((k, v) -> {
+                headers.add(k, v);
+            });
+        }
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody,headers);
+
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(url,requestEntity,String.class);
+            return response.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
