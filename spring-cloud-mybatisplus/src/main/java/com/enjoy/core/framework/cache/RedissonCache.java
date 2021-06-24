@@ -41,10 +41,10 @@ public class RedissonCache implements Cache {
     private long timeToLive;
     private long maxIdleTime;
     private int maxSize;
+    private String redissonConfig;
 
     public RedissonCache(String id) {
         this.id = id;
-        setRedissonConfig("/config/redisson.yaml");
     }
 
     @Override
@@ -104,10 +104,14 @@ public class RedissonCache implements Cache {
         return null;
     }
 
-    public void setRedissonConfig(String config) {
+    public String getRedissonConfig() {
+        return redissonConfig;
+    }
+
+    public void setRedissonConfig(String redissonConfig) {
         Config cfg;
         try {
-            InputStream is = getClass().getResourceAsStream(config);
+            InputStream is = getClass().getResourceAsStream(redissonConfig);
             cfg = Config.fromYAML(is);
         } catch (IOException e) {
             throw new IllegalArgumentException("Can't parse config", e);
