@@ -1,5 +1,9 @@
 package com.enjoy.config;
 
+import cn.hutool.core.util.StrUtil;
+import com.enjoy.config.redisson.SingleServerProperties;
+import com.enjoy.core.framework.cache.RedissonCache;
+import com.enjoy.core.utils.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.redisson.Redisson;
@@ -17,7 +21,6 @@ import org.springframework.data.redis.connection.lettuce.LettucePoolingClientCon
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @program: spring-cloud-dubbo
@@ -31,32 +34,14 @@ import java.io.InputStream;
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisConfig {
 
-    private org.redisson.config.Config loadConfig(ClassLoader classLoader, String fileName) {
-        InputStream is = classLoader.getResourceAsStream(fileName);
-        if (is != null) {
-            try {
-                return org.redisson.config.Config.fromYAML(is);
-            } catch (IOException e) {
-                try {
-                    is = classLoader.getResourceAsStream(fileName);
-                    return org.redisson.config.Config.fromJSON(is);
-                } catch (IOException e1) {
-                    log.error("Can't parse yaml config", e1);
-                }
-            }
+    @Bean(destroyMethod="shutdown")
+    public RedissonClient redissonClient(SingleServerProperties properties) throws IOException {
+        String jsonString = JacksonUtil.toJson(properties);
+        Config config = Config.fromYAML(jsonString);
+        if (StrUtil.isEmpty(properties.getSingleServerConfig().getPassword())){
+            config.useSingleServer().setPassword(null);
         }
-        return null;
-    }
-
-    @Bean
-    public RedissonClient redissonClient(){
-        RedissonClient redissonClient = null;
-
-        Config config = loadConfig(RedisConfig.class.getClassLoader(), "config/redisson.yaml");;
-        redissonClient = Redisson.create(config);
-
-
-        return redissonClient;
+        return Redisson.create(config);
     }
 
     @Bean

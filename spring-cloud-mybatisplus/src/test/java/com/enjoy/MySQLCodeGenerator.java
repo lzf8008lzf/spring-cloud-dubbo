@@ -1,6 +1,7 @@
 package com.enjoy;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.enjoy.core.utils.CodeGenerateUtils;
 import org.springframework.util.DigestUtils;
 
 /**
@@ -19,12 +20,12 @@ public class MySQLCodeGenerator {
         // 表前缀，生成的实体类，不含前缀
         String [] tablePrefixes = {};
         // 表名，为空，生成所有的表
-        String [] tableNames = {};
+        String [] tableNames = {"access"};
         // 字段前缀
         String [] fieldPrefixes = {};
         // 基础包名
-        String packageName = "com.example";
-//        CodeGenerateUtils.execute(dbType, dbUrl, username, password, driver, tablePrefixes, tableNames, packageName, fieldPrefixes);
+        String packageName = "com.enjoy";
+        CodeGenerateUtils.execute(dbType, dbUrl, username, password, driver, tablePrefixes, tableNames, packageName, fieldPrefixes);
 
         System.out.println(DigestUtils.md5DigestAsHex("08affcd1d256a4b2".getBytes()));
     }

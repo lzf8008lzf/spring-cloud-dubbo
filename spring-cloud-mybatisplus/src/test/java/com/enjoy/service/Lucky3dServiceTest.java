@@ -77,9 +77,13 @@ public class Lucky3dServiceTest {
 //
 //        String response = callServer("http://test.openapi.yuexiangvideo.com/api/token/set",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
 
-        param.put("scene","login");
-        param.put("mobile","15810772056");
-        String response = callServer("http://test.openapi.yuexiangvideo.com/api/sms",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
+//        param.put("scene","login");
+//        param.put("mobile","15810772056");
+//        String response = callServer("http://test.openapi.yuexiangvideo.com/api/sms",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
+
+        param.put("uid","39133");
+        param.put("fields","gender,invitercode,sign,avatar,birthyear,birthmonth,birthday,area,jgregname");
+        String response = callServer("https://test.openapi.yuexiangvideo.com/api/user/detail",param,"yx9d49dxea9z2r7s75","28609A84B94C49DFA0DC1F85DD578A19");
 
         System.out.println(response);
 //        System.out.println(NumberUtil.isPrime(13));
