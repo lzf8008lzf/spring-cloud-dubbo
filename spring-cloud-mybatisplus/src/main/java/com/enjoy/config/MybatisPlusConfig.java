@@ -1,6 +1,7 @@
 package com.enjoy.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.enjoy.config.redisson.SingleServerProperties;
 import com.enjoy.core.framework.cache.RedisCache;
 import com.enjoy.core.utils.LongRedisTemplate;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -17,6 +18,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @program: spring-cloud-dubbo
  * @description: Mybatis-plus配置类
@@ -29,8 +32,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 public class MybatisPlusConfig {
 
-//    @Autowired
-//    private DataSource dataSource;
+    @Autowired
+    private SingleServerProperties properties;
+
+    public static SingleServerProperties singleServerProperties;
+
+    @PostConstruct
+    public void init(){
+        singleServerProperties =  properties;
+    }
 
     @Bean
     public LongRedisTemplate longRedisTemplate(RedisConnectionFactory redisConnectionFactory) {

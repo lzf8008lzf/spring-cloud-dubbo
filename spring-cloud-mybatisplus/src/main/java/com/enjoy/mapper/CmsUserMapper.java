@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Property;
 import org.apache.ibatis.annotations.Result;
+import org.springframework.context.annotation.DependsOn;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import org.apache.ibatis.annotations.Result;
  * @author LiZhaofu
  * @since 2020-06-01
  */
+//@DependsOn("springContextHolder")
 @CacheNamespace(implementation = com.enjoy.core.framework.cache.RedissonCache.class ,
         properties ={@Property(name = "timeToLive",value = "200000"),
                 @Property(name = "maxIdleTime",value = "100000"),

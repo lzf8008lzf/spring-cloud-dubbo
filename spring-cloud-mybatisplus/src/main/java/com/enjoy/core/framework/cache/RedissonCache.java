@@ -15,12 +15,18 @@
  */
 package com.enjoy.core.framework.cache;
 
+import com.enjoy.config.MybatisPlusConfig;
+import com.enjoy.config.redisson.SingleServerProperties;
+import com.enjoy.core.framework.SpringContextHolder;
 import com.enjoy.core.utils.CodecUtil;
+import com.enjoy.core.utils.JacksonUtil;
 import org.apache.ibatis.cache.Cache;
 import org.redisson.Redisson;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +41,8 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  */
 public class RedissonCache implements Cache {
+
+    private static Logger log = LoggerFactory.getLogger(RedissonCache.class);
 
     private String id;
     private RMapCache<Object, Object> mapCache;
@@ -111,6 +119,11 @@ public class RedissonCache implements Cache {
     public void setRedissonConfig(String redissonConfig) {
         Config cfg;
         try {
+//            SingleServerProperties singleServerProperties = SpringContextHolder.getBean(SingleServerProperties.class);
+//            log.info(JacksonUtil.toJson(singleServerProperties));
+
+            log.info(JacksonUtil.toJson(MybatisPlusConfig.singleServerProperties));
+
             InputStream is = getClass().getResourceAsStream(redissonConfig);
             cfg = Config.fromYAML(is);
         } catch (IOException e) {
