@@ -20,7 +20,7 @@ import org.springframework.context.annotation.DependsOn;
         properties ={@Property(name = "timeToLive",value = "200000"),
                 @Property(name = "maxIdleTime",value = "100000"),
                 @Property(name = "maxSize",value = "100000"),
-                @Property(name = "redissonConfig",value = "/config/redisson.yaml")})
+                @Property(name = "redissonConfig",value = "redissonConfig")})
 public interface CmsUserMapper extends BaseMapper<CmsUser> {
 
 }

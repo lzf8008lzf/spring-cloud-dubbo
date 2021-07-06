@@ -16,8 +16,6 @@
 package com.enjoy.core.framework.cache;
 
 import com.enjoy.config.MybatisPlusConfig;
-import com.enjoy.config.redisson.SingleServerProperties;
-import com.enjoy.core.framework.SpringContextHolder;
 import com.enjoy.core.utils.CodecUtil;
 import com.enjoy.core.utils.JacksonUtil;
 import org.apache.ibatis.cache.Cache;
@@ -37,7 +35,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 /**
  * MyBatis cache implementation
  *
- * @author Nikita Koksharov
  *
  */
 public class RedissonCache implements Cache {
@@ -119,13 +116,9 @@ public class RedissonCache implements Cache {
     public void setRedissonConfig(String redissonConfig) {
         Config cfg;
         try {
-//            SingleServerProperties singleServerProperties = SpringContextHolder.getBean(SingleServerProperties.class);
-//            log.info(JacksonUtil.toJson(singleServerProperties));
-
-            log.info(JacksonUtil.toJson(MybatisPlusConfig.singleServerProperties));
-
-            InputStream is = getClass().getResourceAsStream(redissonConfig);
-            cfg = Config.fromYAML(is);
+            String jsonConfig = JacksonUtil.toJson(MybatisPlusConfig.singleServerProperties);
+            log.info(jsonConfig);
+            cfg = Config.fromYAML(jsonConfig);
         } catch (IOException e) {
             throw new IllegalArgumentException("Can't parse config", e);
         }
