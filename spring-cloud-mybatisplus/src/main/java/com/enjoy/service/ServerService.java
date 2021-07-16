@@ -1,6 +1,7 @@
 package com.enjoy.service;
 
 import com.enjoy.core.annotation.DistributedLock;
+import com.enjoy.core.annotation.LogTrace;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class ServerService {
 
     @DistributedLock
+    @LogTrace
     public Map test(Integer userId, BigDecimal amount, String productId){
         Map<String, Object> data = new HashMap<>(3);
 

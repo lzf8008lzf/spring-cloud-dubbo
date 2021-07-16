@@ -1,5 +1,6 @@
 package com.enjoy.core.utils;
 
+import com.enjoy.config.RestTemplateConfig;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ public class RestTemplateUtils {
     private static Logger log = LoggerFactory.getLogger(RestTemplateUtils.class);
 
     //SpringContextHolder.getBean("restTemplate")
+    //new RestTemplate(RestTemplateConfig.generateHttpRequestFactory());
     private static final RestTemplate restTemplate = new RestTemplate();
 
     /**
