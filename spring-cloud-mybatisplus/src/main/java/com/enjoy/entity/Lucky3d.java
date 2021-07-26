@@ -73,11 +73,6 @@ public class Lucky3d extends Model<Lucky3d> {
     }
 
     @Override
-    protected Serializable pkVal() {
-        return this.openingTime;
-    }
-
-    @Override
     public String toString() {
         return "Lucky3d{" +
         "openingTime=" + openingTime +

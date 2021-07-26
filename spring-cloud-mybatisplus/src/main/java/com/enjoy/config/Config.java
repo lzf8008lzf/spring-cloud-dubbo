@@ -56,7 +56,7 @@ public class Config {
     public static String projectPath = System.getProperty("user.dir");
 
     /** 输出目录 */
-    public static final String outputDir = projectPath + "/src/main/java";
+    public static final String outputDir = projectPath;
 
     /** 模板引擎。velocity / freemarker / beetl */
     public static final String TEMPLATE_ENGINE = "velocity";

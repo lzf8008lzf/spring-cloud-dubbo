@@ -12,11 +12,9 @@ import org.springframework.util.DigestUtils;
 public class MySQLCodeGenerator {
 
     public static void main(String[] args) {
-        DbType dbType = DbType.MYSQL;
         String dbUrl = "jdbc:mysql://localhost:3306/yuexiang?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=round&&useSSL=false&serverTimezone=Asia/Shanghai";
         String username = "root";
         String password = "admin";
-        String driver = "com.mysql.cj.jdbc.Driver";
         // 表前缀，生成的实体类，不含前缀
         String [] tablePrefixes = {};
         // 表名，为空，生成所有的表
@@ -25,7 +23,7 @@ public class MySQLCodeGenerator {
         String [] fieldPrefixes = {};
         // 基础包名
         String packageName = "com.enjoy";
-        CodeGenerateUtils.execute(dbType, dbUrl, username, password, driver, tablePrefixes, tableNames, packageName, fieldPrefixes);
+        CodeGenerateUtils.execute( dbUrl, username, password, tablePrefixes, tableNames, packageName, fieldPrefixes);
 
         System.out.println(DigestUtils.md5DigestAsHex("08affcd1d256a4b2".getBytes()));
     }

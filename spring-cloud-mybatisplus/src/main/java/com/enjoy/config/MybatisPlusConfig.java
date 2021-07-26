@@ -1,6 +1,8 @@
 package com.enjoy.config;
 
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.enjoy.config.redisson.SingleServerProperties;
 import com.enjoy.core.framework.cache.RedisCache;
 import com.enjoy.core.utils.LongRedisTemplate;
@@ -83,12 +85,12 @@ public class MybatisPlusConfig {
         return new PerformanceMonitorInterceptor();
     }
 
-    /**
-     * 分页插件
-     */
+    // 最新版
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.H2));
+        return interceptor;
     }
 
 //    @Bean(name = "transactionManager")

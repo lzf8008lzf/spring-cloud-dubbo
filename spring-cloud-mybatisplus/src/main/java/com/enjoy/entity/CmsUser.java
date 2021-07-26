@@ -10,6 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -44,9 +45,9 @@ public class CmsUser extends Model<CmsUser> {
     /**
      * 创建日期
      */
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime createDate;
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private Date createDate;
 
     /**
      * 头像
@@ -56,9 +57,9 @@ public class CmsUser extends Model<CmsUser> {
     /**
      * 最后修改时间
      */
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime modifyDate;
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private Date modifyDate;
 
     /**
      * 环信ID
@@ -138,11 +139,11 @@ public class CmsUser extends Model<CmsUser> {
         this.tagId = tagId;
     }
 
-    public LocalDateTime getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -154,11 +155,11 @@ public class CmsUser extends Model<CmsUser> {
         this.avatar = avatar;
     }
 
-    public LocalDateTime getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(LocalDateTime modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 
@@ -232,11 +233,6 @@ public class CmsUser extends Model<CmsUser> {
 
     public void setClientUuid(String clientUuid) {
         this.clientUuid = clientUuid;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
     }
 
     @Override

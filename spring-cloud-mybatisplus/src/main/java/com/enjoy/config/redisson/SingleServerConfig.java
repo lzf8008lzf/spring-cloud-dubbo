@@ -39,7 +39,7 @@ public class SingleServerConfig extends BaseConfig {
     private int connectionPoolSize = 64;
 
     /**Database index used for Redis connection */
-    @Value("${redisson.singleServerConfig.database:7}")
+    @Value("${redisson.singleServerConfig.database:1}")
     private int database = 0;
 
     /**Interval in milliseconds to check DNS */
