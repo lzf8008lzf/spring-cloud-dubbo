@@ -63,8 +63,6 @@ public class CodeGenerateUtils {
     // 包信息配置
     private static PackageConfig packageConfig(String packageName) {
         PackageConfig packageConfig =GeneratorBuilder.packageConfigBuilder().parent("com.enjoy")
-                .moduleName("demo").controller("action").entity("entity")
-                .mapper("dao").service("iservice").serviceImpl("impl")
                 .build();
         return packageConfig;
     }

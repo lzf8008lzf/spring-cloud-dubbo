@@ -25,7 +25,7 @@ public class MySQLCodeGenerator {
         String packageName = "com.enjoy";
         CodeGenerateUtils.execute( dbUrl, username, password, tablePrefixes, tableNames, packageName, fieldPrefixes);
 
-        System.out.println(DigestUtils.md5DigestAsHex("08affcd1d256a4b2".getBytes()));
+//        System.out.println(DigestUtils.md5DigestAsHex("08affcd1d256a4b2".getBytes()));
     }
 
 }
