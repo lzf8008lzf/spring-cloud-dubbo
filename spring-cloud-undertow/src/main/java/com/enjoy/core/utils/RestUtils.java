@@ -27,7 +27,7 @@ import java.util.Objects;
  * @description:
  * @author: 47
  */
-@Component
+//@Component
 public class RestUtils {
 
     private static RestTemplate restTemplate;
