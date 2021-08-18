@@ -21,7 +21,13 @@ public class HiveTest {
 
     @Test
     public void hiveTest(){
-        String sql="select * from test10";
+        String sql="INSERT into table test10(year_num, month_num, sales)\n" +
+                "values\n" +
+                "(1,1,1)";
+
+        hiveJdbcTemplate.update(sql);
+
+        sql="select * from test10";
         List<Map<String, Object>> maps = hiveJdbcTemplate.queryForList(sql);
         System.out.println(JSONUtil.toJsonStr(maps));
     }
