@@ -1,9 +1,9 @@
-#!/bin/sh
+﻿#!/bin/sh
 ## java env
 
 JVM_Options="-XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=512m -Xms1g -Xmx1g -Xmn512m -Xss512k -XX:+HeapDumpOnOutOfMemoryError -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC"
 
-API_NAME=basic-server-0.0.1-SNAPSHOT
+API_NAME=spring-cloud-0.0.1-SNAPSHOT
 JAR_NAME=$API_NAME\.jar
 #PID  代表是PID文件
 PID=$API_NAME\.pid
