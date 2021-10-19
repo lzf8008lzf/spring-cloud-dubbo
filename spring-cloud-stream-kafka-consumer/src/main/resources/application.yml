@@ -33,3 +33,4 @@ spring:
         #input是接收，注意这里不能再像前面一样写output了
         input:
           destination: stream-demo
+          group: demo

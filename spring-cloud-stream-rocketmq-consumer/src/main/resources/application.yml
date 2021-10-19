@@ -26,7 +26,7 @@ spring:
     stream:
       rocketmq:
         binder:
-          namesrv-addr: dubbohost:9876
+          namesrv-addr: 47.93.20.175:9876
       bindings:
         input:
           destination: test-topic

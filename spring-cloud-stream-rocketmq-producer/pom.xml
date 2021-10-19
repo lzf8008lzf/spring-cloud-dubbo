@@ -29,13 +29,21 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-stream-binder-rocketmq -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>-->
+<!--            <version>0.2.1.RELEASE</version>-->
+<!--&lt;!&ndash; 使用最新版本报错 RocketMQ Message hasn't been sent. Caused by No route info of this topic&ndash;&gt;-->
+<!--&lt;!&ndash;            <version>0.9.0.RELEASE</version>&ndash;&gt;-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-stream-rocketmq -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-rocketmq</artifactId>
-            <version>0.2.1.RELEASE</version>
-<!-- 使用最新版本报错 RocketMQ Message hasn't been sent. Caused by No route info of this topic-->
-<!--            <version>0.9.0.RELEASE</version>-->
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+<!--            <version>2.2.3.RELEASE</version>-->
         </dependency>
+
 
     </dependencies>
 
@@ -45,14 +53,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-deploy-plugin</artifactId>-->
+<!--                <version>${maven-deploy-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <skip>true</skip>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

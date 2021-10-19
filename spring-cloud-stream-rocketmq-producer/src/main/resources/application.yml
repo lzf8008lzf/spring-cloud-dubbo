@@ -26,8 +26,8 @@ spring:
     stream:
       rocketmq:
         binder:
-          namesrv-addr: dubbohost:9876
+          namesrv-addr: 192.168.20.242:9876
       bindings:
         output:
-          destination: test-topic
+          destination: queue_test_topic
           content-type: application/json
