@@ -2,7 +2,7 @@ spring:
   profiles:
     active: nacos
   application:
-    name: nacos-feign-server
+    name: servertwo
   main:
     allow-bean-definition-overriding: true
 
@@ -25,7 +25,7 @@ spring:
   cloud:
     nacos:
       username: nacos
-      password: nacos
+      password: nacosadmin
       discovery:
         enabled: true
         register-enabled: true

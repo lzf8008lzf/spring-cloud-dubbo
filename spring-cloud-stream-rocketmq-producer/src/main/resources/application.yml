@@ -27,7 +27,15 @@ spring:
       rocketmq:
         binder:
           namesrv-addr: 192.168.20.242:9876
+        bindings:
+          output:
+            producer:
+              group: rocketmq_test #自定义的组名称
+              sync: true
       bindings:
         output:
           destination: queue_test_topic
           content-type: application/json
+logging:
+  level:
+    com.alibaba.cloud.stream.binder.rocketmq: debug

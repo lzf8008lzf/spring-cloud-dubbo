@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 客户端调用
@@ -17,4 +18,7 @@ public interface FeignClientService {
 
     @RequestMapping(value = "welcomeAd", method = { RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE+";charset=UTF-8")
     public WelcomeAd welcomeAd();
+
+    @RequestMapping(value="/two/hello/one")
+    String hello(@RequestParam(value="ms") String ms);
 }

@@ -4,4 +4,4 @@ server:
     context-path: /
 provider:
   application:
-    name: nacos-feign-server
+    name: servertwo

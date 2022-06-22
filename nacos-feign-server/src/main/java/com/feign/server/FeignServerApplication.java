@@ -5,17 +5,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 启动类
  */
 @SpringBootApplication
 @RestController
+@EnableDiscoveryClient
 public class FeignServerApplication {
     private static final Logger logger = LoggerFactory.getLogger(FeignServerApplication.class);
 
@@ -39,5 +38,16 @@ public class FeignServerApplication {
         welcomeAd.setType("img");
 
         return welcomeAd;
+    }
+
+    @GetMapping("two/hello")
+    public String hello(){
+        return "hello,我是2号";
+    }
+
+    @RequestMapping(value="/two/hello/one")
+    public String helloOne(@RequestParam(value="ms") String ms){
+        System.out.println(ms);
+        return "success:"+ms;
     }
 }
