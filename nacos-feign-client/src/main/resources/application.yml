@@ -5,3 +5,7 @@ server:
 provider:
   application:
     name: servertwo
+
+logging:
+  level:
+    com.feign.client: debug
